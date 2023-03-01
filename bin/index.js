@@ -14,21 +14,25 @@ if (major < 10) {
 }
 
 const { program } = require("commander")
-const { clear } = require("../package/utils/log")
-const generateCfonts = require("../package/utils/generate-cfonts")
 
-clear()
+const generateCfonts = require("../package/utils/generate-cfonts")
 
 program.version(require("../package.json").version)
 
 program.usage("[command]").description(generateCfonts().string)
 
 program
+  .usage("chat")
   .command("chat")
-  .description("chat with chatGPT")
-  .option("-h", "--history <event>", "handle chat history")
-  .action(() => {
-    require("../package/command/chat")(process.argv.slice(3))
-  })
+  .description("Chat with GPT model")
+  .action(require("../package/command/chat"))
+
+program
+  .usage("history")
+  .command("history")
+  .option("-r --read", "read history file conent in terminal", false)
+  .option("-c --clear", "clear history file conent", false)
+  .description("Operate your chat historical document")
+  .action(require("../package/command/history"))
 
 program.parse(process.argv)

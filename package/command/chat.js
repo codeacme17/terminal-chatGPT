@@ -14,37 +14,9 @@ const history = new History()
 
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
-module.exports = (argus) => {
+module.exports = () => {
   history.init()
-
-  if (argus.length) analyseArguments(argus)
-  else startREPL()
-}
-
-/** Analyse the arguments passed to the function.
-    @param {Array} argus - The array of arguments passed to the function.
-    @returns {void}
- */
-function analyseArguments(argus) {
-  const [flag, command] = argus
-
-  switch (command) {
-    case undefined:
-      process.stdout.write(history.read())
-      break
-
-    case "read":
-      process.stdout.write(history.read())
-      break
-
-    case "clear":
-      history.clear()
-      break
-
-    default:
-      error(`no command called '${chalk.hex(COLORS.YELLOW)(command)}'`)
-      return
-  }
+  startREPL()
 }
 
 /** Starts a new REPL session to chat with GPT-3.
@@ -135,6 +107,6 @@ async function requestOpenai(cmd, type) {
 
 function startChatLog() {
   log()
-  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH CHATGPT HERE...")}`)
+  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
   log()
 }
