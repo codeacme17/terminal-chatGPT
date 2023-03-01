@@ -1,7 +1,7 @@
 const cfonts = require("cfonts")
 
 function generate() {
-  const content = `|  1llest Group|  TERMINAL-GPT|`
+  const content = `|1llest Group|TERMINAL-GPT|`
   return cfonts.render(content, {
     font: "console",
     align: "left",

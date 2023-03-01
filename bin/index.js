@@ -19,20 +19,18 @@ const generateCfonts = require("../package/utils/generate-cfonts")
 
 program.version(require("../package.json").version)
 
-program.usage("[command]").description(generateCfonts().string)
+program.usage("[command] [option]").description(generateCfonts().string)
 
 program
-  .usage("chat")
   .command("chat")
   .description("Chat with GPT model")
-  .action(require("../package/command/chat"))
+  .action(require("../package/commands/chat"))
 
 program
-  .usage("history")
   .command("history")
   .option("-r --read", "read history file conent in terminal", false)
   .option("-c --clear", "clear history file conent", false)
   .description("Operate your chat historical document")
-  .action(require("../package/command/history"))
+  .action(require("../package/commands/history"))
 
 program.parse(process.argv)

@@ -5,7 +5,7 @@ const Load = require("../utils/Load")
 const History = require("../utils/History")
 const { COLORS } = require("../utils/config")
 const { clear, log } = require("../utils/log")
-const { chat, explainCode } = require("../utils/api")
+const { chat, explainCode } = require("../utils/apis")
 
 NODE_REPL_HISTORY = ""
 
