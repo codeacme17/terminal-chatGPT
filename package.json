@@ -1,0 +1,22 @@
+{
+  "name": "nafr-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./bin/index.js",
+  "bin": {
+    "nafr": "./bin/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boxen": "^5.1.2",
+    "cfonts": "^3.1.1",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "detect-package-manager": "^2.0.1",
+    "inquirer": "^8.2.5",
+    "openai": "^3.1.0",
+    "shelljs": "^0.8.5"
+  }
+}
