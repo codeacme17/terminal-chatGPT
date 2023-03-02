@@ -2,4 +2,8 @@ const path = require("path")
 const shell = require("shelljs")
 const fs = require("fs")
 
-module.exports = {}
+const API_FILE = path.resolve(__dirname, "../../KEY.json")
+
+module.exports = {
+  API_FILE,
+}

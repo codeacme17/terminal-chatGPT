@@ -1,5 +1,5 @@
 const chalk = require("chalk")
-const { COLORS } = require("../utils/config")
+const { COLORS } = require("./configs")
 
 /** The Load Class to create a loading effect interface
     @param {string} message the message of loading text content 

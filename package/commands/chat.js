@@ -3,7 +3,7 @@ const chalk = require("chalk")
 
 const Load = require("../utils/Load")
 const History = require("../utils/History")
-const { COLORS } = require("../utils/config")
+const { COLORS } = require("../utils/configs")
 const { clear, log } = require("../utils/log")
 const { chat, explainCode } = require("../utils/apis")
 

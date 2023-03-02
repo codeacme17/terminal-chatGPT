@@ -27,6 +27,16 @@ program
   .action(require("../package/commands/chat"))
 
 program
+  .command("config")
+  .option(
+    "-k --key [OPENAI_KEY]",
+    "read history file conent in terminal",
+    false
+  )
+  .description("Config your GPT terminal")
+  .action(require("../package/commands/config"))
+
+program
   .command("history")
   .option("-r --read", "read history file conent in terminal", false)
   .option("-c --clear", "clear history file conent", false)

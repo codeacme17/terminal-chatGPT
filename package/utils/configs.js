@@ -8,12 +8,6 @@ const COLORS = {
   ORANGE: "#f59e0b",
 }
 
-const PLUGIN = ["axios", "tailwindcss", "eslint"]
-
-const PROJECT = ["vanilla", "vue", "react"]
-
 module.exports = {
   COLORS,
-  PLUGIN,
-  PROJECT,
 }

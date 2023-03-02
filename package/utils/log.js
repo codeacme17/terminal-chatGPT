@@ -1,5 +1,5 @@
 const chalk = require("chalk")
-const { COLORS } = require("../utils/config")
+const { COLORS } = require("./configs")
 
 function log(message = "") {
   console.log(message)
