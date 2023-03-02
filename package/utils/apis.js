@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai")
+
 const { log, error } = require("../utils/log")
 
 // chat model api

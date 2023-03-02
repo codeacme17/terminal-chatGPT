@@ -1,7 +1,7 @@
 const fs = require("fs")
 const shell = require("shelljs")
 const { API_FILE } = require("../utils/path")
-const { success, warn } = require("../utils/log")
+const { log, success, warn } = require("../utils/log")
 const { _confirmChangeKey } = require("../utils/questions")
 
 module.exports = ({ key }) => {
@@ -23,17 +23,18 @@ async function modifyKey(key) {
   data["OPENAI_API"] = `${key}`
   fs.writeFileSync(API_FILE, JSON.stringify(data))
 
+  log()
   success("Successfully modified OpenAI key")
 }
 
-function createKeyFile() {
+async function createKeyFile() {
   shell.touch(API_FILE)
 
   const KEY = {
     OPENAI_API: "",
   }
 
-  fs.appendFile(API_FILE, JSON.stringify(KEY), (err) => {
+  fs.appendFileSync(API_FILE, JSON.stringify(KEY), (err) => {
     console.log(err)
   })
 

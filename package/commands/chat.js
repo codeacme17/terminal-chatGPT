@@ -1,11 +1,13 @@
 const repl = require("repl")
 const chalk = require("chalk")
+const fs = require("fs")
 
 const Load = require("../utils/Load")
 const History = require("../utils/History")
 const { COLORS } = require("../utils/configs")
-const { clear, log } = require("../utils/log")
+const { clear, error, log } = require("../utils/log")
 const { chat, explainCode } = require("../utils/apis")
+const { API_FILE } = require("../utils/path")
 
 NODE_REPL_HISTORY = ""
 
@@ -15,8 +17,18 @@ const history = new History()
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
 module.exports = () => {
-  history.init()
+  if (!fs.existsSync(API_FILE)) {
+    error("You haven't set OPENAI KEY. Please set up before dive into chatting")
+    log(
+      `use command ${chalk.hex(COLORS.YELLOW)(
+        "igpt config -k [your OpenAI Key]"
+      )} to set your key`
+    )
+    log("")
+    return
+  }
 
+  history.init()
   startChatLog()
   startREPL()
 }
@@ -79,9 +91,11 @@ async function requestOpenai(cmd, type) {
 
 function startChatLog() {
   clear()
+
   log()
   log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
   log()
+
   log(
     `${chalk.hex(COLORS.GRAY)(
       "start at: " + new Date().toLocaleDateString(),
