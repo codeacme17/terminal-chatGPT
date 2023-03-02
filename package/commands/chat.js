@@ -66,27 +66,33 @@ function formatCmd(cmd) {
 }
 
 function chatCommand(cmd) {
-  if (cmd === "/") process.exit(1)
-  if (cmd === "clear") {
-    clear()
-    process.exit(1)
+  switch (true) {
+    case cmd === "/":
+      process.exit(1)
+
+    case cmd === "clear":
+      clear()
+      process.exit(1)
+
+    case /^\/code/.test(cmd):
+      return "code"
+
+    case /^\/note/.test(cmd):
+      return "note"
+
+    default:
+      break
   }
-  if (/^\/code/.test(cmd)) return "code"
-  if (/^\/note/.test(cmd)) return "note"
 }
 
 async function requestOpenai(cmd, type) {
-  let res
   switch (type) {
     case "code":
-      res = await explainCode(cmd.substring(5))
-      break
+      return await explainCode(cmd.substring(5))
 
     default:
-      res = await chat(cmd)
-      break
+      return await chat(cmd)
   }
-  return res
 }
 
 function startChatLog() {
