@@ -7,7 +7,7 @@ const chalk = require("chalk")
 if (major < 10) {
   console.error(
     chalk.red(
-      `You are running Node \n${currentNodeVersion} \n1llg-terminal-gpt requires Node 10 or higher.\nPlease update your version of Node`
+      `You are running Node \n${currentNodeVersion} \n1llg-terminal-gpt requires Node 14 or higher.\nPlease update your version of Node`
     )
   )
   process.exit(1)

@@ -6,8 +6,16 @@
   "bin": {
     "igpt": "./bin/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "terminal",
+    "cli",
+    "chatGPT",
+    "GPT",
+    "GPT model",
+    "OpenAI"
+  ],
+  "homepage": "https://github.com/codeacme17/1llg-terminal-GPT#readme",
+  "author": "leyoonafr",
   "license": "MIT",
   "dependencies": {
     "boxen": "^5.1.2",
