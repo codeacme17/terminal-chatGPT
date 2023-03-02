@@ -12,13 +12,13 @@ function success(message) {
 
 function warn(message) {
   console.log()
-  console.warn(chalk.hex(COLORS.ORANGE)("WARN") + ": " + message)
+  console.warn(chalk.hex(COLORS.ORANGE)("WARN") + " - " + message)
   console.log()
 }
 
 function error(message) {
   console.log()
-  console.error(chalk.hex(COLORS.RED)("ERROR") + ": " + message)
+  console.error(chalk.hex(COLORS.RED)("ERROR") + " - " + message)
   console.log()
 }
 

@@ -38,13 +38,13 @@ async function eval(cmd, context, filename, cb) {
   load.start()
   const res = await requestOpenai(cmd, commendType)
   history.write(formatedCmd + "\n", "QUESTION")
-  load.end()
 
   cb(null, res)
 }
 
 function writer(output) {
   history.write(output + "\n\n", "ANSWER")
+  load.end()
   return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${output}\n`
 }
 

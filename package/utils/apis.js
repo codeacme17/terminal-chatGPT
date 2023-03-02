@@ -1,25 +1,26 @@
 const { Configuration, OpenAIApi } = require("openai")
-const { error } = require("../utils/log")
+const { log, error } = require("../utils/log")
 
 // chat model api
 async function chat(prompt) {
   const openai = initConfiguration()
+  let response = ""
+  try {
+    response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `Q: ${prompt} \n`,
+      temperature: 0,
+      max_tokens: 200,
+      top_p: 1,
+      frequency_penalty: 1,
+      presence_penalty: 1,
+      stop: ["Q: "],
+    })
+  } catch (err) {
+    errorResponse(err.response)
+  }
 
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: `Q: ${prompt} \n`,
-    temperature: 0,
-    max_tokens: 200,
-    top_p: 1,
-    frequency_penalty: 1,
-    presence_penalty: 1,
-    stop: ["Q: "],
-  })
-
-  if (response.status === 401) errorKey()
-
-  let res = response.data.choices[0].text.trim()
-
+  const res = response.data.choices[0].text.trim()
   return formatResponse(res)
 }
 
@@ -48,8 +49,17 @@ function initConfiguration() {
   return new OpenAIApi(configuration)
 }
 
-function errorKey() {
-  error("your OpenAI key is incorrect, please change correct one")
+function errorResponse(response) {
+  switch (response.status) {
+    case 401:
+      log()
+      error("your OpenAI key is incorrect, please change correct one")
+      break
+
+    default:
+      break
+  }
+
   process.exit(1)
 }
 
