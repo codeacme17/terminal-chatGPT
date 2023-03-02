@@ -5,6 +5,7 @@ const { log, error } = require("../utils/log")
 // chat model api
 async function chat(prompt) {
   const openai = initConfiguration()
+
   let response = ""
   try {
     response = await openai.createCompletion({
@@ -29,18 +30,29 @@ async function chat(prompt) {
 async function explainCode(prompt) {
   const openai = initConfiguration()
 
-  const response = await openai.createCompletion({
-    model: "code-davinci-002",
-    prompt: `code: ${prompt} \n`,
-    temperature: 0,
-    max_tokens: 200,
-    top_p: 1.0,
-    frequency_penalty: 0.0,
-    presence_penalty: 0.0,
-    stop: ["code: "],
-  })
-  let res = response.data.choices[0].text.trim()
+  let response = ""
+  try {
+    response = await openai.createCompletion({
+      model: "code-davinci-002",
+      prompt: `code: ${prompt} \n`,
+      temperature: 0,
+      max_tokens: 200,
+      top_p: 1.0,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+      stop: ["code: "],
+    })
+  } catch (err) {
+    errorResponse(err.response)
+  }
+
+  const res = response.data.choices[0].text.trim()
   return res
+}
+
+module.exports = {
+  chat,
+  explainCode,
 }
 
 function initConfiguration() {
@@ -62,11 +74,6 @@ function errorResponse(response) {
   }
 
   process.exit(1)
-}
-
-module.exports = {
-  chat,
-  explainCode,
 }
 
 function formatResponse(res) {
