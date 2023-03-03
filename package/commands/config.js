@@ -5,11 +5,8 @@ const { log, success, warn } = require("../utils/log")
 const { _confirmChangeKey } = require("../utils/questions")
 
 module.exports = ({ key }) => {
-  if (typeof key === "string") {
-    handleKey(key)
-  } else {
-    warn("OpenAI key cannot be empty")
-  }
+  if (typeof key === "string") handleKey(key)
+  else warn("OpenAI key cannot be empty")
 }
 
 async function handleKey(key) {

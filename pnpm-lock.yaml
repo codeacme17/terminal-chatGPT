@@ -6,7 +6,7 @@ specifiers:
   chalk: ^4.1.2
   commander: ^9.4.1
   inquirer: ^8.2.5
-  openai: ^3.1.0
+  openai: ^3.2.1
   shelljs: ^0.8.5
 
 dependencies:
@@ -15,7 +15,7 @@ dependencies:
   chalk: registry.npmmirror.com/chalk/4.1.2
   commander: registry.npmmirror.com/commander/9.5.0
   inquirer: registry.npmmirror.com/inquirer/8.2.5
-  openai: registry.npmmirror.com/openai/3.1.0
+  openai: registry.npmmirror.com/openai/3.2.1
   shelljs: registry.npmmirror.com/shelljs/0.8.5
 
 packages:
@@ -573,10 +573,10 @@ packages:
       mimic-fn: registry.npmmirror.com/mimic-fn/2.1.0
     dev: false
 
-  registry.npmmirror.com/openai/3.1.0:
-    resolution: {integrity: sha512-v5kKFH5o+8ld+t0arudj833Mgm3GcgBnbyN9946bj6u7bvel4Yg6YFz2A4HLIYDzmMjIo0s6vSG9x73kOwvdCg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/openai/-/openai-3.1.0.tgz}
+  registry.npmmirror.com/openai/3.2.1:
+    resolution: {integrity: sha512-762C9BNlJPbjjlWZi4WYK9iM2tAVAv0uUp1UmI34vb0CN5T2mjB/qM6RYBmNKMh/dN9fC+bxqPwWJZUTWW052A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/openai/-/openai-3.2.1.tgz}
     name: openai
-    version: 3.1.0
+    version: 3.2.1
     dependencies:
       axios: registry.npmmirror.com/axios/0.26.1
       form-data: registry.npmmirror.com/form-data/4.0.0

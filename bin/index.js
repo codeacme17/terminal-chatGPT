@@ -4,7 +4,7 @@ const currentNodeVersion = process.versions.node
 const major = currentNodeVersion.split(".")[0]
 const chalk = require("chalk")
 
-if (major < 10) {
+if (major < 14) {
   console.error(
     chalk.red(
       `You are running Node \n${currentNodeVersion} \n1llg-terminal-gpt requires Node 14 or higher.\nPlease update your version of Node`
@@ -28,11 +28,7 @@ program
 
 program
   .command("config")
-  .option(
-    "-k --key [OPENAI_KEY]",
-    "read history file conent in terminal",
-    false
-  )
+  .option("-k --key [OPENAI_KEY]", "read history file conent in terminal")
   .description("Config your GPT terminal")
   .action(require("../package/commands/config"))
 
