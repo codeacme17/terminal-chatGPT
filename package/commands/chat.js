@@ -4,15 +4,17 @@ const fs = require("fs")
 
 const Load = require("../utils/Load")
 const History = require("../utils/History")
+const Cache = require("../utils/Cache")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
-const { chat, explainCode } = require("../utils/apis")
+const { chat, explainCode, turbo } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
 
 NODE_REPL_HISTORY = ""
 
 const load = new Load("chatGPT is writing...")
 const history = new History()
+const cache = new Cache()
 
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
@@ -48,6 +50,8 @@ async function eval(cmd, context, filename, cb) {
   if (!formatedCmd || load.loading) return
 
   load.start()
+  if (!cache.cache.length) cache.firstChat(cmd)
+  else cache.ask(cmd)
   const res = await requestOpenai(cmd, commendType)
   history.write(formatedCmd + "\n", "QUESTION")
 
@@ -55,6 +59,7 @@ async function eval(cmd, context, filename, cb) {
 }
 
 function writer(output) {
+  cache.answer(output)
   history.write(output + "\n\n", "ANSWER")
   load.end()
   return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${output}\n`
@@ -77,8 +82,8 @@ function chatCommand(cmd) {
     case /^\/code/.test(cmd):
       return "code"
 
-    case /^\/note/.test(cmd):
-      return "note"
+    case /^\/turbo/.test(cmd):
+      return "turbo"
 
     default:
       break
@@ -89,6 +94,9 @@ async function requestOpenai(cmd, type) {
   switch (type) {
     case "code":
       return await explainCode(cmd.substring(5))
+
+    case "turbo":
+      return await turbo(cache.cache)
 
     default:
       return await chat(cmd)

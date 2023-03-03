@@ -19,7 +19,7 @@ async function chat(prompt) {
       stop: ["Q: "],
     })
   } catch (err) {
-    errorResponse(err.response)
+    errorResponse(err)
   }
 
   const res = response.data.choices[0].text.trim()
@@ -43,33 +43,42 @@ async function explainCode(prompt) {
       stop: ["code: "],
     })
   } catch (err) {
-    errorResponse(err.response)
+    errorResponse(err)
   }
 
   const res = response.data.choices[0].text.trim()
   return res
 }
 
-async function chatGPT(prompt) {
+// 3.5 turbo model api
+async function turbo(cache) {
   const openai = initConfiguration()
+  let response = ""
+  console.log(cache)
+  try {
+    response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: cache,
+      temperature: 0,
+      max_tokens: 200,
+      top_p: 1.0,
+      frequency_penalty: 0.8,
+      presence_penalty: 0.0,
+    })
+  } catch (err) {
+    errorResponse(err)
+  }
 
-  openai.completions.create({
-    engine: "gpt-3.5-turbo",
-    messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: "Who won the world series in 2020?" },
-      {
-        role: "assistant",
-        content: "The Los Angeles Dodgers won the World Series in 2020.",
-      },
-      { role: "user", content: "Where was it played?" },
-    ],
-  })
+  console.log(response)
+
+  const res = response.data.choices[0].message.content.trim()
+  return res
 }
 
 module.exports = {
   chat,
   explainCode,
+  turbo,
 }
 
 function initConfiguration() {
@@ -79,16 +88,18 @@ function initConfiguration() {
   return new OpenAIApi(configuration)
 }
 
-function errorResponse(response) {
-  switch (response.status) {
-    case 401:
-      log()
-      error("your OpenAI key is incorrect, please change correct one")
-      break
+function errorResponse(err) {
+  if (err.response)
+    switch (err.response.status) {
+      case 401:
+        log()
+        error("your OpenAI key is incorrect, please change correct one")
+        break
 
-    default:
-      break
-  }
+      default:
+        break
+    }
+  else error(err)
 
   process.exit(1)
 }
