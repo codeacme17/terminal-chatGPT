@@ -10,7 +10,6 @@ async function Turbo(cache) {
       model: "gpt-3.5-turbo",
       messages: cache,
     })
-
     return response.data.choices[0].message.content.trim()
   } catch (err) {
     errorResponse(err)
@@ -42,6 +41,7 @@ async function DavinciChat(prompt) {
 // explain code model api
 async function DavinciCode(prompt) {
   const openai = initConfiguration()
+
   try {
     const response = await openai.createCompletion({
       model: "code-davinci-002",

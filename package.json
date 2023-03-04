@@ -1,10 +1,10 @@
 {
   "name": "1llg-terminal-GPT",
   "version": "1.0.0",
-  "description": "chat with GPT model on your terminal",
+  "description": "chat with chatGPT model like 'turbo' on your terminal",
   "main": "./bin/index.js",
   "bin": {
-    "igpt": "./bin/index.js"
+    "1gpt": "./bin/index.js"
   },
   "keywords": [
     "terminal",
@@ -12,7 +12,9 @@
     "chatGPT",
     "GPT",
     "GPT model",
-    "OpenAI"
+    "OpenAI",
+    "turbo",
+    "davinci"
   ],
   "homepage": "https://github.com/codeacme17/1llg-terminal-GPT#readme",
   "author": "leyoonafr",
