@@ -39,8 +39,6 @@ You need to configure your access rights to access the OpenAI API. Please replac
 
 Use the above command to enter the chat mode to communicate with chatGPT.
 
-<img src="/Users/codeacme17/Desktop/Screenshot 2023-03-04 at 19.55.52.png" alt="Screenshot 2023-03-04 at 19.55.52" style="zoom: 50%;" />
-
 #### chat commands
 
 After entering the chat, you can perform different operations by entering the following commands
