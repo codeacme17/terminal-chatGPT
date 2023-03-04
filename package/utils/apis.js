@@ -6,9 +6,8 @@ const { log, error } = require("../utils/log")
 async function chat(prompt) {
   const openai = initConfiguration()
 
-  let response = ""
   try {
-    response = await openai.createCompletion({
+    const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `Q: ${prompt} \n`,
       temperature: 0,
@@ -18,21 +17,19 @@ async function chat(prompt) {
       presence_penalty: 1,
       stop: ["Q: "],
     })
+    const res = response.data.choices[0].text.trim()
+    return formatResponse(res)
   } catch (err) {
     errorResponse(err)
   }
-
-  const res = response.data.choices[0].text.trim()
-  return formatResponse(res)
 }
 
 // explain code model api
 async function explainCode(prompt) {
   const openai = initConfiguration()
 
-  let response = ""
   try {
-    response = await openai.createCompletion({
+    const response = await openai.createCompletion({
       model: "code-davinci-002",
       prompt: `code: ${prompt} \n`,
       temperature: 0,
@@ -42,21 +39,19 @@ async function explainCode(prompt) {
       presence_penalty: 0.0,
       stop: ["code: "],
     })
+    const res = response.data.choices[0].text.trim()
+    return res
   } catch (err) {
     errorResponse(err)
   }
-
-  const res = response.data.choices[0].text.trim()
-  return res
 }
 
 // 3.5 turbo model api
 async function turbo(cache) {
   const openai = initConfiguration()
-  let response = ""
-  console.log(cache)
+
   try {
-    response = await openai.createChatCompletion({
+    const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: cache,
       temperature: 0,
@@ -65,14 +60,11 @@ async function turbo(cache) {
       frequency_penalty: 0.8,
       presence_penalty: 0.0,
     })
+    const res = response.data.choices[0].message.content.trim()
+    return res
   } catch (err) {
     errorResponse(err)
   }
-
-  console.log(response)
-
-  const res = response.data.choices[0].message.content.trim()
-  return res
 }
 
 module.exports = {
@@ -83,6 +75,7 @@ module.exports = {
 
 function initConfiguration() {
   const configuration = new Configuration({
+    organization: "org-7ks4y8LPKnuFd4EWbPxKBZxB",
     apiKey: require("../../KEY.json").OPENAI_API,
   })
   return new OpenAIApi(configuration)
