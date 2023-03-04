@@ -81,7 +81,7 @@ function chatCommand(cmd) {
     case cmd === "/":
       process.exit(1)
 
-    case cmd === "clear":
+    case cmd === "/clear":
       clear()
       process.exit(1)
 
