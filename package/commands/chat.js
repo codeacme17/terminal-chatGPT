@@ -7,12 +7,12 @@ const History = require("../utils/History")
 const Cache = require("../utils/Cache")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
-const { chat, explainCode, turbo } = require("../utils/apis")
+const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
 
 NODE_REPL_HISTORY = ""
 
-const load = new Load("chatGPT is writing...")
+const load = new Load(`chatGPT is writing...`)
 const history = new History()
 const cache = new Cache()
 
@@ -72,6 +72,12 @@ function formatCmd(cmd) {
 
 function chatCommand(cmd) {
   switch (true) {
+    case /^\/davinci_code/.test(cmd):
+      return "DaviciCode"
+
+    case /^\/davinci_chat/.test(cmd):
+      return "DaviciChat"
+
     case cmd === "/":
       process.exit(1)
 
@@ -79,27 +85,21 @@ function chatCommand(cmd) {
       clear()
       process.exit(1)
 
-    case /^\/code/.test(cmd):
-      return "code"
-
-    case /^\/turbo/.test(cmd):
-      return "turbo"
-
     default:
-      break
+      return "Turbo"
   }
 }
 
 async function requestOpenai(cmd, type) {
   switch (type) {
-    case "code":
-      return await explainCode(cmd.substring(5))
+    case "DaviciChat":
+      return await DavinciChat(cmd)
 
-    case "turbo":
-      return await turbo(cache.cache)
+    case "DaviciCode":
+      return await DavinciCode(cmd.substring(5))
 
     default:
-      return await chat(cmd)
+      return await Turbo(cache.cache)
   }
 }
 

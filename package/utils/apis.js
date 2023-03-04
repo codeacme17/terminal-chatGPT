@@ -1,9 +1,24 @@
 const { Configuration, OpenAIApi } = require("openai")
-
 const { log, error } = require("../utils/log")
 
+// 3.5 turbo model api
+async function Turbo(cache) {
+  const openai = initConfiguration()
+
+  try {
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: cache,
+    })
+
+    return response.data.choices[0].message.content.trim()
+  } catch (err) {
+    errorResponse(err)
+  }
+}
+
 // chat model api
-async function chat(prompt) {
+async function DavinciChat(prompt) {
   const openai = initConfiguration()
 
   try {
@@ -25,9 +40,8 @@ async function chat(prompt) {
 }
 
 // explain code model api
-async function explainCode(prompt) {
+async function DavinciCode(prompt) {
   const openai = initConfiguration()
-
   try {
     const response = await openai.createCompletion({
       model: "code-davinci-002",
@@ -39,38 +53,16 @@ async function explainCode(prompt) {
       presence_penalty: 0.0,
       stop: ["code: "],
     })
-    const res = response.data.choices[0].text.trim()
-    return res
-  } catch (err) {
-    errorResponse(err)
-  }
-}
-
-// 3.5 turbo model api
-async function turbo(cache) {
-  const openai = initConfiguration()
-
-  try {
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: cache,
-      temperature: 0,
-      max_tokens: 200,
-      top_p: 1.0,
-      frequency_penalty: 0.8,
-      presence_penalty: 0.0,
-    })
-    const res = response.data.choices[0].message.content.trim()
-    return res
+    return response.data.choices[0].text.trim()
   } catch (err) {
     errorResponse(err)
   }
 }
 
 module.exports = {
-  chat,
-  explainCode,
-  turbo,
+  Turbo,
+  DavinciChat,
+  DavinciCode,
 }
 
 function initConfiguration() {
