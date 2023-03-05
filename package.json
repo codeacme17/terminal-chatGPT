@@ -1,5 +1,5 @@
 {
-  "name": "1llg-terminal-GPT",
+  "name": "1llg-terminal-gpt",
   "version": "1.0.0",
   "description": "chat with chatGPT model like 'turbo' on your terminal",
   "main": "./bin/index.js",
