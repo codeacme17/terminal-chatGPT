@@ -9,7 +9,7 @@ class Cache {
   firstChat(message) {
     const msg = {
       role: "system",
-      cotent: message,
+      content: message,
     }
     this.cache.push(msg)
   }
@@ -17,15 +17,15 @@ class Cache {
   ask(message) {
     const msg = {
       role: "user",
-      cotent: message,
+      content: message,
     }
     this.cache.push(msg)
   }
 
   answer(message) {
     const msg = {
-      role: "user",
-      cotent: message,
+      role: "assistant",
+      content: message,
     }
     this.cache.push(msg)
   }

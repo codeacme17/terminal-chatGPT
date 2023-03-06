@@ -6,10 +6,15 @@ async function Turbo(cache) {
   const openai = initConfiguration()
 
   try {
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: cache,
-    })
+    const response = await openai.createChatCompletion(
+      {
+        model: "gpt-3.5-turbo",
+        messages: cache,
+      },
+      {
+        timeout: 10000,
+      }
+    )
     return response.data.choices[0].message.content.trim()
   } catch (err) {
     errorResponse(err)
@@ -21,16 +26,21 @@ async function DavinciChat(prompt) {
   const openai = initConfiguration()
 
   try {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: `Q: ${prompt} \n`,
-      temperature: 0,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 1,
-      presence_penalty: 1,
-      stop: ["Q: "],
-    })
+    const response = await openai.createCompletion(
+      {
+        model: "text-davinci-003",
+        prompt: `Q: ${prompt} \n`,
+        temperature: 0,
+        max_tokens: 200,
+        top_p: 1,
+        frequency_penalty: 1,
+        presence_penalty: 1,
+        stop: ["Q: "],
+      },
+      {
+        timeout: 10000,
+      }
+    )
     const res = response.data.choices[0].text.trim()
     return formatResponse(res)
   } catch (err) {
@@ -43,16 +53,21 @@ async function DavinciCode(prompt) {
   const openai = initConfiguration()
 
   try {
-    const response = await openai.createCompletion({
-      model: "code-davinci-002",
-      prompt: `code: ${prompt} \n`,
-      temperature: 0,
-      max_tokens: 200,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-      stop: ["code: "],
-    })
+    const response = await openai.createCompletion(
+      {
+        model: "code-davinci-002",
+        prompt: `code: ${prompt} \n`,
+        temperature: 0,
+        max_tokens: 200,
+        top_p: 1.0,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.0,
+        stop: ["code: "],
+      },
+      {
+        timeout: 10000,
+      }
+    )
     return response.data.choices[0].text.trim()
   } catch (err) {
     errorResponse(err)
@@ -67,7 +82,6 @@ module.exports = {
 
 function initConfiguration() {
   const configuration = new Configuration({
-    organization: "org-7ks4y8LPKnuFd4EWbPxKBZxB",
     apiKey: require("../../KEY.json").OPENAI_API,
   })
   return new OpenAIApi(configuration)
