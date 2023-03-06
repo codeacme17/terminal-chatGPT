@@ -12,7 +12,7 @@ async function Turbo(cache) {
         messages: cache,
       },
       {
-        timeout: 10000,
+        timeout: 30 * 1000,
       }
     )
     return response.data.choices[0].message.content.trim()
@@ -38,7 +38,7 @@ async function DavinciChat(prompt) {
         stop: ["Q: "],
       },
       {
-        timeout: 10000,
+        timeout: 30 * 1000,
       }
     )
     const res = response.data.choices[0].text.trim()
@@ -65,7 +65,7 @@ async function DavinciCode(prompt) {
         stop: ["code: "],
       },
       {
-        timeout: 10000,
+        timeout: 30 * 1000,
       }
     )
     return response.data.choices[0].text.trim()
