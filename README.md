@@ -1,16 +1,22 @@
 
+<p align="center">
+<img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true "/> 
+</p>                                                      
 
- 1 l l g -t e r m i n a l - g p t
+<p align="center">
+<img width="100" height="80" alt="download" src="https://img.shields.io/npm/dt/1llg-terminal-gpt?style=for-the-badge"/> 
+<img width="100" height="80"  alt="version" src="https://img.shields.io/github/package-json/v/codeacme17/1llg-terminal-GPT?style=for-the-badge"/>
+<img width="100" height="80"  alt="license" src="https://img.shields.io/github/license/codeacme17/1llg-terminal-GPT?style=for-the-badge"/>
+</p>
 
-
-
+<p align="center">
 1llg-terminal-GPT is a command-line interface (CLI) tool that uses OpenAI's GPT-3.5-turbo(default) API to generate text based on user prompts.
+</p>
 
 
 
 ## Start
 
-> Node >= 14
 
 ### Install
 
