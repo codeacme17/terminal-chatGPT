@@ -15,7 +15,7 @@
 ### Install
 
 ```bash
-$ npm install 1llg-terminal-gpt -G
+$ npm install 1llg-terminal-gpt -g
 ```
 
 ### Config
