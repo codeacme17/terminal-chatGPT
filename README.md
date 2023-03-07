@@ -1,7 +1,14 @@
+<br />
+<br />
+<br />
 
 <p align="center">
 <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true "/> 
-</p>                                                      
+</p>
+
+<br />
+<br />
+<br />
 
 <p align="center">
 <a href="https://www.npmjs.com/package/1llg-terminal-gpt" target="_blank">
