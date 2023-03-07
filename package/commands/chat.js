@@ -23,7 +23,7 @@ module.exports = () => {
     error("You haven't set OPENAI KEY. Please set up before dive into chatting")
     log(
       `use command ${chalk.hex(COLORS.YELLOW)(
-        "igpt config -k [your OpenAI Key]"
+        "1gpt config -k [your OpenAI Key]"
       )} to set your key`
     )
     log("")
