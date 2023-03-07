@@ -5,6 +5,7 @@ const fs = require("fs")
 const Load = require("../utils/Load")
 const History = require("../utils/History")
 const Cache = require("../utils/Cache")
+const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
 const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
@@ -15,6 +16,7 @@ NODE_REPL_HISTORY = ""
 const load = new Load(`chatGPT is writing...`)
 const history = new History()
 const cache = new Cache()
+const codeBoxer = new CodeBoxer()
 
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
@@ -61,8 +63,9 @@ async function eval(cmd, context, filename, cb) {
 function writer(output) {
   cache.answer(output)
   history.write(output + "\n\n", "ANSWER")
+  const boxedOutput = codeBoxer.boxify(output)
   load.end()
-  return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${output}\n`
+  return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
 }
 
 function formatCmd(cmd) {
