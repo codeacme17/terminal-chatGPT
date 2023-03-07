@@ -14,20 +14,20 @@ class CodeBoxer {
           bottom: 1,
           left: 5,
         },
-        title: language ? language : "",
         backgroundColor: "#333333",
         dimBorder: true,
         borderStyle: {
-          topLeft: "━",
+          topLeft: " ",
           topRight: " ",
           bottomLeft: " ",
           bottomRight: " ",
-          top: language ? "━" : " ",
+          top: " ",
           bottom: " ",
           left: " ",
           right: " ",
         },
-        fullscreen: (width) => [width],
+        fullscreen: (width) => [width - 5],
+        float: "center",
       }
 
       return boxen(code, boxenOptions)
