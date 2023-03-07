@@ -1,15 +1,24 @@
 
-<p align="center" style="padding: 50px 0px 40px 0px">
+<p align="center">
 <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true "/> 
 </p>                                                      
 
 <p align="center">
-<img width="100" alt="download" src="https://img.shields.io/npm/dt/1llg-terminal-gpt?style=for-the-badge"/> 
-<img width="100" alt="version" src="https://img.shields.io/github/package-json/v/codeacme17/1llg-terminal-GPT?style=for-the-badge"/>
-<img width="100" alt="license" src="https://img.shields.io/github/license/codeacme17/1llg-terminal-GPT?style=for-the-badge"/>
+<a href="https://www.npmjs.com/package/1llg-terminal-gpt" target="_blank">
+<img width="130" height="20" alt="download" src="https://img.shields.io/npm/dw/1llg-terminal-gpt?style=flat-square"/>
+</a>
+<a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json" target="_blank">
+<img width="100" height="20" alt="node" src="https://img.shields.io/badge/node-%3E%3D%2014.0.0-orange?style=flat-square"/>
+</a>
+<a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json" target="_blank">
+<img width="100" height="20" alt="version" src="https://img.shields.io/github/package-json/v/codeacme17/1llg-terminal-GPT?style=flat-square"/>
+</a>
+<a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/LICENSE" target="_blank">
+<img width="80" height="20" alt="license" src="https://img.shields.io/github/license/codeacme17/1llg-terminal-GPT?style=flat-square"/>
+</a>
 </p>
 
-<p align="center" style="color: gray">
+<p align="center">
 1llg-terminal-GPT is a command-line interface (CLI) tool that uses OpenAI's GPT-3.5-turbo(default) API to generate text based on user prompts.
 </p>
 
