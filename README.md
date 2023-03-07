@@ -46,9 +46,9 @@ $ npm install 1llg-terminal-gpt -g
 1gpt config --key [your_api_key]
 ```
 
+> I can guarantee that your keys are not stored anywhere other than your computer. After performing the above operations, a file named `KEY.json` will be created on the root directory of the project in your computer to store and read your api-key
+
 You need to configure your access rights to access the OpenAI API. Please replace **[your_api_key]** to your actual OpenAI key. You can get your API keys from [OpenAI-Keys](https://platform.openai.com/account/api-keys).
-
-
 
 
 ## Usage
