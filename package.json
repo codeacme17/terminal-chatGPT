@@ -1,6 +1,6 @@
 {
   "name": "1llg-terminal-gpt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "chat with chatGPT model like 'turbo' on your terminal",
   "main": "./bin/index.js",
   "bin": {
