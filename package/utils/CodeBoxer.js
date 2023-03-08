@@ -14,7 +14,7 @@ class CodeBoxer {
           bottom: 1,
           left: 5,
         },
-        backgroundColor: "#333333",
+        borderStyle: "round",
         dimBorder: true,
         fullscreen: (width) => [width - 5],
         float: "center",
