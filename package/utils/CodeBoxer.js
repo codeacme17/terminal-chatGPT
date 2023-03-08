@@ -1,9 +1,16 @@
 const boxen = require("boxen")
 const highlight = require("cli-highlight").highlight
+const { COLORS } = require("../utils/configs")
 
 class CodeBoxer {
   constructor() {
     this.codeRegex = /```(\w+)?\n([\s\S]*?)\n```/g
+    this.theme = {
+      keyword: COLORS.BLUE,
+      built_in: ["cyan", "dim"],
+      string: COLORS.GREEN,
+      default: COLORS.GRAY,
+    }
     this.boxenOptions = {
       padding: {
         top: 1,
