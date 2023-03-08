@@ -10,13 +10,25 @@ class CodeBoxer {
       const boxenOptions = {
         padding: {
           top: 1,
-          right: 5,
+          right: 10,
           bottom: 1,
           left: 5,
         },
-        borderStyle: "round",
         dimBorder: true,
-        fullscreen: (width) => [width - 5],
+        backgroundColor: "#333333",
+        borderStyle: {
+          topLeft: " ",
+          topRight: " ",
+          bottomLeft: " ",
+          bottomRight: " ",
+          top: " ",
+          bottom: " ",
+          left: " ",
+          right: " ",
+          vertical: " ",
+          horizontal: " ",
+        },
+        fullscreen: (width) => [width - 2],
         float: "center",
       }
 
