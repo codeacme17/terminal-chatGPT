@@ -48,6 +48,7 @@ class CodeBoxer {
     return highlight(code, {
       language: language ? language : "javascript",
       ignoreIllegals: true,
+      theme: () => this.theme,
     })
   }
 }
