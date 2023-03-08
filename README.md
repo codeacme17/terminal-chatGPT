@@ -29,7 +29,11 @@
 1llg-terminal-GPT is a command-line interface (CLI) tool that uses OpenAI's GPT-3.5-turbo(default) API to generate text based on user prompts.
 </p>
 
+## Use Case
 
+<p align="center">
+  <img alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/Screenshot-usage.png"/> 
+</p>
 
 ## Start
 
