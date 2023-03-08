@@ -17,8 +17,8 @@
   <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json">
     <img height="20" alt="node" src="https://img.shields.io/badge/node-%3E%3D%2014.0.0-orange?style=flat-square"/>
   </a>
-  <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/LICENSE">
-    <img width="80" height="20" alt="license" src="https://img.shields.io/github/license/codeacme17/1llg-terminal-GPT?style=flat-square"/>
+  <a href="https://discord.com/channels/974519864045756446/1082238050542813244">
+    <img height="20" alt="license" src="https://img.shields.io/badge/discord-chat%20room-blueviolet?style=flat-square"/>
   </a>
   <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json">
     <img height="20" alt="version" src="https://img.shields.io/github/package-json/v/codeacme17/1llg-terminal-GPT?style=flat-square"/>
