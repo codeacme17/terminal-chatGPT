@@ -63,7 +63,7 @@ async function eval(cmd, context, filename, cb) {
 function writer(output) {
   cache.answer(output)
   history.write(output + "\n\n", "ANSWER")
-  const boxedOutput = codeBoxer.boxify(output)
+  const boxedOutput = codeBoxer.boxify(output.toString())
   load.end()
   return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
 }

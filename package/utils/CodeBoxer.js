@@ -6,7 +6,7 @@ class CodeBoxer {
   }
 
   boxify(text) {
-    return text.replace(this.codeRegex, (match, language, code) => {
+    return text.replaceAll(this.codeRegex, (match, language, code) => {
       const boxenOptions = {
         padding: {
           top: 1,
@@ -16,16 +16,6 @@ class CodeBoxer {
         },
         backgroundColor: "#333333",
         dimBorder: true,
-        borderStyle: {
-          topLeft: " ",
-          topRight: " ",
-          bottomLeft: " ",
-          bottomRight: " ",
-          top: " ",
-          bottom: " ",
-          left: " ",
-          right: " ",
-        },
         fullscreen: (width) => [width - 5],
         float: "center",
       }
