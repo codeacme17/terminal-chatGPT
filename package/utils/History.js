@@ -2,19 +2,19 @@ const path = require("path")
 const fs = require("fs")
 const shell = require("shelljs")
 
-const { log, success, warn, error } = require("../utils/log")
+const { log, success, warn } = require("../utils/log")
+const { HISTORY_FILE } = require("../utils/path")
 
 class History {
   constructor() {
-    this.HISTROTY_PATH = ""
+    this.HISTORY_FILE = ""
     this.content = ""
   }
 
   init() {
-    const HISTROTY_PATH = path.resolve(__dirname, "../../chat_history.txt")
-    if (!fs.existsSync(HISTROTY_PATH)) shell.touch(HISTROTY_PATH)
-    this.HISTROTY_PATH = HISTROTY_PATH
-    this.content = fs.readFileSync(this.HISTROTY_PATH, { encoding: "utf-8" })
+    if (!fs.existsSync(HISTORY_FILE)) shell.touch(HISTORY_FILE)
+    this.HISTORY_FILE = HISTORY_FILE
+    this.content = fs.readFileSync(this.HISTORY_FILE, { encoding: "utf-8" })
   }
 
   read() {
@@ -30,12 +30,12 @@ class History {
       type === "QUESTION" ? `\n${currentDate}  ${currentTime}\n` : ""
     } \n  ${type}: ${content}`
 
-    fs.appendFile(this.HISTROTY_PATH, content, () => {})
+    fs.appendFile(this.HISTORY_FILE, content, () => {})
   }
 
   clear() {
     if (!this.checkHasContent()) return ""
-    fs.writeFile(this.HISTROTY_PATH, "", () => {})
+    fs.writeFile(this.HISTORY_FILE, "", () => {})
 
     log()
     success("Successfully cleared history file content")
