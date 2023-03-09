@@ -111,4 +111,4 @@ Contributions to the project are welcome! If you find a bug or have an idea for 
 
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+[MIT](https://github.com/codeacme17/1llg-terminal-GPT/blob/main/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
