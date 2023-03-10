@@ -11,7 +11,7 @@ const _confirmClearHistory = () =>
     },
   ])
 
-const _confirmChangeKey = (newKey) =>
+const _confirmChangeKey = () =>
   inquirer.prompt([
     {
       name: "QUESTION",

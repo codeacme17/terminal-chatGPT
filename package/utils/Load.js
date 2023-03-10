@@ -31,10 +31,8 @@ class Load {
   content() {
     const frames = [".", "o", "O", "°", "O", "o", "."]
     const frame = frames[this.frameIndex]
-    const ellipsises = [".", "..", "..."]
-    const ellipsis = ellipsises[this.ellipsisIndex]
     this.frameIndex = ++this.frameIndex % frames.length
-    this.ellipsisIndex = ++this.ellipsisIndex % ellipsises.length
+
     return (
       chalk.hex(COLORS.BLUE)(frame) + " " + chalk.hex(COLORS.GRAY)(this.message)
     )

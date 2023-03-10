@@ -11,6 +11,7 @@ const { clear, error, log } = require("../utils/log")
 const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
 
+// eslint-disable-next-line no-undef
 NODE_REPL_HISTORY = ""
 
 const load = new Load(`chatGPT is writing...`)
@@ -40,12 +41,12 @@ module.exports = () => {
 function startREPL() {
   repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
-    eval,
-    writer,
+    eval: evalHandler,
+    writer: writerHandler,
   })
 }
 
-async function eval(cmd, context, filename, cb) {
+async function evalHandler(cmd, context, filename, cb) {
   const formatedCmd = formatCmd(cmd)
   const commendType = chatCommand(formatedCmd)
 
@@ -60,7 +61,7 @@ async function eval(cmd, context, filename, cb) {
   cb(null, res)
 }
 
-function writer(output) {
+function writerHandler(output) {
   cache.answer(output)
   history.write(output + "\n\n", "ANSWER")
   const boxedOutput = codeBoxer.boxify(output.toString())
@@ -83,10 +84,12 @@ function chatCommand(cmd) {
 
     case cmd === "/":
       process.exit(1)
+      break
 
     case cmd === "/clear":
       clear()
       process.exit(1)
+      break
 
     default:
       return "Turbo"
