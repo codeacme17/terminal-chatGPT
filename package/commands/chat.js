@@ -11,9 +11,6 @@ const { clear, error, log } = require("../utils/log")
 const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
 
-// eslint-disable-next-line no-undef
-NODE_REPL_HISTORY = ""
-
 const load = new Load(`chatGPT is writing...`)
 const history = new History()
 const cache = new Cache()
@@ -39,6 +36,8 @@ module.exports = () => {
 }
 
 function startREPL() {
+  process.env.NODE_REPL_HISTORY = ""
+
   repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
     eval: evalHandler,
