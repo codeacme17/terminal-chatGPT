@@ -22,7 +22,29 @@ const _confirmChangeKey = () =>
     },
   ])
 
+const _chosePattern = (type) =>
+  inquirer.prompt([
+    {
+      name: "QUESTION",
+      type: "list",
+      message: `chose which pattern you want ${type}:`,
+      choices: ["pattern 1", "pattern 2"], // dummy
+    },
+  ])
+
+const _createPattern = () =>
+  inquirer.prompt([
+    {
+      name: "QUESTION",
+      type: "input",
+      message: `what pattern you want create?`,
+      default: "pattern-temp",
+    },
+  ])
+
 module.exports = {
   _confirmClearHistory,
   _confirmChangeKey,
+  _chosePattern,
+  _createPattern,
 }
