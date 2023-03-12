@@ -14,7 +14,7 @@ class CodeBoxer {
     this.boxenOptions = {
       padding: {
         top: 1,
-        right: 10,
+        right: 16,
         bottom: 1,
         left: 5,
       },
@@ -32,7 +32,6 @@ class CodeBoxer {
         vertical: " ",
         horizontal: " ",
       },
-      fullscreen: (width) => [width - 2],
       float: "center",
     }
   }
