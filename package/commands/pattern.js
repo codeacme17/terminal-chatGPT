@@ -29,13 +29,15 @@ const pattern = new Pattern()
 async function handleUse(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
     PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.GREEN)("use"))
+
+  pattern.read(PATTERN_NAME)
 }
 
 async function handleCreate(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
     PATTERN_NAME = await createPatternQuestion()
 
-  pattern.createPattern(PATTERN_NAME)
+  pattern.create(PATTERN_NAME)
 }
 
 async function handleList() {
