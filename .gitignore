@@ -5,3 +5,5 @@ patterns
 KEY.JSON
 
 chat_history.txt
+
+sftp-config.json
