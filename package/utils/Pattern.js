@@ -29,7 +29,7 @@ class Pattern {
       )
     } else
       error(
-        `the pattern '${chalk.hex(COLORS.YELLOW)(patternName)}' already exists`
+        `the pattern ${chalk.hex(COLORS.YELLOW)(patternName)} already exists`
       )
   }
 
@@ -68,7 +68,18 @@ class Pattern {
   read(patternName) {
     const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
     const content = JSON.parse(fs.readFileSync(PATTERN_FILE, "utf-8"))
-    log(content)
+  }
+
+  remove(patternName) {
+    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
+      
+    if (!this.checkHasPatternFile(patternName)) {
+      error(`there is no pattern ${chalk.hex(COLORS.YELLOW)(patternName)}`)
+    }
+
+    fs.unlink(PATTERN_FILE, (err) => err && error(err))
+    log()
+    success(`Successed remove pattern ${chalk.hex(COLORS.YELLOW)(patternName)}`)
   }
 
   checkHasPatternFile(patternName) {

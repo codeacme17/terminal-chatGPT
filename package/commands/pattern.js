@@ -29,8 +29,6 @@ const pattern = new Pattern()
 async function handleUse(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
     PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.GREEN)("use"))
-
-  pattern.read(PATTERN_NAME)
 }
 
 async function handleCreate(PATTERN_NAME) {
@@ -41,15 +39,18 @@ async function handleCreate(PATTERN_NAME) {
 }
 
 async function handleList() {
-  const list = ["pattern 1", "pattern 2", "pattern 3"] // dummy
-  for (let item of list) {
-    log(item)
+  log()
+  for (let item of pattern.patterns) {
+    log(`${chalk.hex(COLORS.GREEN)(item)}`)
   }
+  log()
 }
 
 async function handleRemove(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
     PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.RED)("remove"))
+
+  pattern.remove(PATTERN_NAME)
 }
 
 async function createPatternQuestion() {
