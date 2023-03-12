@@ -1,7 +1,8 @@
 const chalk = require("chalk")
+const Pattern = require("../utils/Pattern")
 const { COLORS } = require("../utils/configs")
 const { _chosePattern, _createPattern } = require("../utils/questions")
-const { success, log } = require("../utils/log")
+const { success, log, warn } = require("../utils/log")
 
 module.exports = ({ use, create, list, remove }) => {
   switch (true) {
@@ -23,16 +24,18 @@ module.exports = ({ use, create, list, remove }) => {
   }
 }
 
+const pattern = new Pattern()
+
 async function handleUse(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
-    PATTERN_NAME = await chosePattern(chalk.hex(COLORS.GREEN)("use"))
+    PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.GREEN)("use"))
 }
 
 async function handleCreate(PATTERN_NAME) {
-  if (typeof PATTERN_NAME !== "string") PATTERN_NAME = await createPattern()
+  if (typeof PATTERN_NAME !== "string")
+    PATTERN_NAME = await createPatternQuestion()
 
-  log()
-  success(`Successed create pattern ${PATTERN_NAME}`)
+  pattern.createPattern(PATTERN_NAME)
 }
 
 async function handleList() {
@@ -44,15 +47,25 @@ async function handleList() {
 
 async function handleRemove(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
-    PATTERN_NAME = await chosePattern(chalk.hex(COLORS.RED)("remove"))
+    PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.RED)("remove"))
 }
 
-async function createPattern() {
+async function createPatternQuestion() {
   const answer = await _createPattern()
   return answer.QUESTION
 }
 
-async function chosePattern(type) {
+async function chosePatternQuestion(type) {
+  if (!pattern.patterns.length) {
+    warn("there was no any pattern yet")
+    log(
+      `you can use command ${chalk.hex(COLORS.YELLOW)(
+        "1gpt pattern -c [pattern-name]"
+      )} to create one`
+    )
+    log()
+    return
+  }
   const answer = await _chosePattern(type)
   return answer.QUESTION
 }
