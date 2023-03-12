@@ -8,7 +8,26 @@ const { COLORS } = require("./configs")
 class Pattern {
   constructor() {
     this.createPatternDir()
-    this.patterns = fs.readdirSync(PATTERN_DIR)
+
+    this.patterns = fs
+      .readdirSync(PATTERN_DIR)
+      .map((pattern) => pattern.replace(".json", ""))
+  }
+
+  createPattern(patternName) {
+    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
+
+    if (!this.checkHasPatternFile(patternName)) {
+      fs.appendFile(PATTERN_FILE, "", (err) => error(err))
+
+      log()
+      success(
+        `Successed create pattern ${chalk.hex(COLORS.GREEN)(patternName)}`
+      )
+    } else
+      error(
+        `the pattern '${chalk.hex(COLORS.YELLOW)(patternName)}' already exists`
+      )
   }
 
   createPatternDir() {
@@ -16,24 +35,9 @@ class Pattern {
   }
 
   checkHasPatternFile(patternName) {
-    const PATTERN_FILE = path.resolve(PATTERN_DIR, patternName)
+    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
     if (!fs.existsSync(PATTERN_FILE)) return false
-
-    error(
-      `the pattern '${chalk.hex(COLORS.YELLOW)(patternName)}' already exists`
-    )
     return true
-  }
-
-  createPattern(patternName) {
-    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}`)
-    if (!this.checkHasPatternFile(patternName)) {
-      fs.appendFile(PATTERN_FILE, "", (err) => {})
-      log()
-      success(
-        `Successed create pattern ${chalk.hex(COLORS.GREEN)(patternName)}`
-      )
-    }
   }
 }
 

@@ -99,8 +99,6 @@ function errorResponse(err) {
         break
     }
   else error(err)
-
-  process.exit(1)
 }
 
 function formatResponse(res) {

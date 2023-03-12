@@ -20,6 +20,7 @@ function error(message) {
   console.log()
   console.error(chalk.hex(COLORS.RED)("ERROR") + " - " + message)
   console.log()
+  process.exit(1)
 }
 
 function clear() {
