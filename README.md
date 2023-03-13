@@ -82,6 +82,23 @@ After entering the chat, you can perform different operations by entering the fo
 - some still under development...
 
 
+### Pattern
+
+> Pattern is a module that can record your chat history with chatGPT, and you can continue the last chat when you open the terminal next time. You can create multiple patterns to correspond to different chatGPT systems, just like the sidebar on the chatGPT website
+
+```bash
+1gpt pattern
+```
+
+#### options
+- `-u, --use [pattern-name]`: used to open an existing pattern. `1gpt pattern` has the same effect
+- `-c, --create [pattern-name]`: create a new pattern
+- `-r, --remove [pattern-name]`: delete a existing pattern
+- `-l, --list`: show the existing pattern list
+
+> Highly recommended that you read this document [Pattern-user-guide](https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/pattern-use-cases.md).
+
+
 
 ### History
 
