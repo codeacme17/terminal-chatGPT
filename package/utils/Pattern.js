@@ -2,9 +2,36 @@ const fs = require("fs")
 const path = require("path")
 const chalk = require("chalk")
 
+const CodeBoxer = require("../utils/CodeBoxer")
 const { warn, log, error, success } = require("../utils/log")
 const { PATTERN_DIR } = require("../utils/path")
 const { COLORS } = require("./configs")
+
+/** pattern JSON file structure: 
+ *  
+ *  {
+ *    "user": [
+ *      {
+ *        "id": 0,
+ *        "system": "..."
+ *      },
+ *      {
+ *        "id": 1,
+ *        "user": "..."
+ *      }    
+ *    ],
+ *    "assistant": [
+ *      {
+ *        "id": 0,
+ *        "assistant": "..."
+ *      },
+ *      {
+ *        "id": 1,
+ *        "assistant": "..."
+ *      }
+ *    ]
+ *  } 
+ */
 
 class Pattern {
   constructor() {
@@ -29,7 +56,6 @@ class Pattern {
   }
 
   writeUser(data) {
-    this.read()
     this.initPatternContent()
 
     if (this.currentId === 0) {
@@ -107,6 +133,18 @@ class Pattern {
     return true
   }
 
+  lastHistoryLog() {
+    if(this.currentId === 0) return
+      
+    const codeBoxer = new CodeBoxer()
+    const lastUser = this.PATTERN_CONTENT.user[this.currentId - 1].user
+    const lastAssistant = this.PATTERN_CONTENT.assistant[this.currentId - 1].assistant
+    const boxedOutput = codeBoxer.boxify(lastAssistant.toString())
+
+    log()
+    log(`${chalk.hex(COLORS.GREEN)("Question: ")}\n${chalk.dim(lastUser)}`)
+    log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${chalk.dim(boxedOutput)}`)
+  }
 }
 
 module.exports = Pattern

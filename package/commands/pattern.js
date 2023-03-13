@@ -32,6 +32,7 @@ async function handleUse(PATTERN_NAME) {
     PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.GREEN)("use"))
 
   pattern.PATTERN_NAME = PATTERN_NAME
+  pattern.read()
   chat(pattern)
 }
 

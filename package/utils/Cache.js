@@ -32,7 +32,6 @@ class Cache {
 
   // if is pattern mode, inject previous pattern content to current cache
   injectPattern(pattern) {
-    pattern.read()
     const patternContent = pattern.PATTERN_CONTENT
     const userList = patternContent.user
     const assistantList = patternContent.assistant
