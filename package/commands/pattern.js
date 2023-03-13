@@ -1,5 +1,6 @@
 const chalk = require("chalk")
 const Pattern = require("../utils/Pattern")
+const chat = require("./chat")
 const { COLORS } = require("../utils/configs")
 const { _chosePattern, _createPattern } = require("../utils/questions")
 const { success, log, warn } = require("../utils/log")
@@ -29,6 +30,9 @@ const pattern = new Pattern()
 async function handleUse(PATTERN_NAME) {
   if (typeof PATTERN_NAME !== "string")
     PATTERN_NAME = await chosePatternQuestion(chalk.hex(COLORS.GREEN)("use"))
+
+  pattern.PATTERN_NAME = PATTERN_NAME
+  chat(pattern)
 }
 
 async function handleCreate(PATTERN_NAME) {

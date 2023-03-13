@@ -6,23 +6,23 @@ const Load = require("../utils/Load")
 const History = require("../utils/History")
 const Cache = require("../utils/Cache")
 const CodeBoxer = require("../utils/CodeBoxer")
-const Pattern = require("../utils/Pattern")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
 const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
-
-// eslint-disable-next-line no-undef
-NODE_REPL_HISTORY = ""
 
 const load = new Load(`chatGPT is writing...`)
 const history = new History()
 const cache = new Cache()
 const codeBoxer = new CodeBoxer()
 
+let _pattern
+let PATTERN_MODE = false
+
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
-module.exports = () => {
+module.exports = (pattern) => {
+  // check does have API_KEY
   if (!fs.existsSync(API_FILE)) {
     error("You haven't set OPENAI KEY. Please set up before dive into chatting")
     log(
@@ -34,12 +34,20 @@ module.exports = () => {
     return
   }
 
+  // trigger to pattern mode
+  if(pattern.PATTERN_NAME) {
+    _pattern = pattern
+    PATTERN_MODE = true
+  }
+
   history.init()
   startChatLog()
   startREPL()
 }
 
 function startREPL() {
+  process.env.NODE_REPL_HISTORY = ""
+
   repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
     eval: evalHandler,
@@ -114,7 +122,7 @@ function startChatLog() {
   clear()
 
   log()
-  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
+  PATTERN_MODE ? startPatternModeLog() : startNormalModeLog()
   log()
 
   log(
@@ -123,4 +131,12 @@ function startChatLog() {
       new Date().toLocaleTimeString()
     )}\n`
   )
+}
+
+function startPatternModeLog() {
+  log(`You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
+}
+
+function startNormalModeLog() {
+  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
 }

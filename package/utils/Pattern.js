@@ -13,6 +13,8 @@ class Pattern {
       .readdirSync(PATTERN_DIR)
       .map((pattern) => pattern.replace(".json", ""))
 
+    this.PATTERN_NAME = ""
+    this.PATTERN_CONTENT = ""
     this.createFlag = false
     this.currentId = 0 // `id` is used to sort conversation records
   }
@@ -33,10 +35,11 @@ class Pattern {
       )
   }
 
-  write(patternName, data) {
-    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
-    const content = JSON.parse(fs.readFileSync(PATTERN_FILE, "utf-8"))
-    if (this.createFlag) {
+  write(data) {
+
+    read(this.PATTERN_NAME)
+
+    if (this.currentId === 0) {
       content.user.push({
         id: this.currentId,
         system: data.user,
@@ -44,7 +47,7 @@ class Pattern {
       content.assistant.push({
         id: this.currentId,
         assistant: data.assistant,
-      })
+      })   
     } else {
       content.user.push({
         id: this.currentId,
@@ -55,11 +58,13 @@ class Pattern {
         assistant: data.assistant,
       })
     }
+
     fs.writeFileSync(
       PATTERN_DIR,
       JSON.stringify(content, null, 2),
       (err) => err && error(err)
     )
+    
     this.currentId++
   }
 
@@ -67,7 +72,8 @@ class Pattern {
 
   read(patternName) {
     const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
-    const content = JSON.parse(fs.readFileSync(PATTERN_FILE, "utf-8"))
+    this.PATTERN_CONTENT = JSON.parse(fs.readFileSync(PATTERN_FILE, "utf-8"))
+    this.currentId = content.assistant[content.assistant.length - 1].id
   }
 
   remove(patternName) {
@@ -87,6 +93,7 @@ class Pattern {
     if (!fs.existsSync(PATTERN_FILE)) return false
     return true
   }
+
 }
 
 module.exports = Pattern
