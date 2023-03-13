@@ -56,7 +56,7 @@ class Pattern {
   }
 
   writeUser(data) {
-    this.initPatternContent()
+    this.getCurrentId()
 
     if (this.currentId === 0) {
       this.PATTERN_CONTENT.user.push({
@@ -134,8 +134,6 @@ class Pattern {
   }
 
   lastHistoryLog() {
-    if(this.currentId === 0) return
-      
     const codeBoxer = new CodeBoxer()
     const lastUser = this.PATTERN_CONTENT.user[this.currentId - 1].user
     const lastAssistant = this.PATTERN_CONTENT.assistant[this.currentId - 1].assistant
@@ -144,6 +142,13 @@ class Pattern {
     log()
     log(`${chalk.hex(COLORS.GREEN)("Question: ")}\n${chalk.dim(lastUser)}`)
     log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${chalk.dim(boxedOutput)}`)
+  }
+
+  firstLog() {
+    log()
+    log(`${chalk.dim("This is the first time you use this pattern, and your first dialogue data will be used as the system of this pattern.")}`)
+    log()
+    log(`${chalk.dim(`You can go to ${chalk.hex(COLORS.GREEN)("https://github.com/f/awesome-chatgpt-prompts")} to choose a prompt as the pattern system`)}`)
   }
 }
 

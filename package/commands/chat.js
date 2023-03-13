@@ -65,10 +65,11 @@ async function evalHandler(cmd, context, filename, cb) {
 
   load.start()
 
+  if (!cache.cache.length) cache.firstChat(cmd)
+  else cache.ask(cmd)
+
   const res = await requestOpenai(cmd, commendType)
 
-  if (!cache.cache.length) cache.firstChat(formatedCmd)
-  else cache.ask(formatedCmd)
   PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
 
@@ -143,7 +144,8 @@ function startChatLog() {
 
 function startPatternModeLog() {
   log(`📔 You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
-  _pattern.lastHistoryLog()
+  if(_pattern.currentId === 0) _pattern.firstLog() 
+  else _pattern.lastHistoryLog()
 }
 
 function startNormalModeLog() {
