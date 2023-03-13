@@ -65,7 +65,7 @@ You need to configure your access rights to access the OpenAI API. Please replac
 
 Use the above command to enter the chat mode to communicate with chatGPT.
 
-> This command will provide a quick chat mode, and your current chat conversation will not be remembered by chatGPT. If you want to continue chatting next time after leaving the terminal, I suggest you use [pattern mode](https://github.com/codeacme17/terminal-chatGPT#-pattern).
+> This command will provide a quick chat mode, and your current chat conversation will not be remembered by chatGPT. If you want to continue chatting next time after leaving the terminal, I suggest you use `Pattern` mode.
 
 #### chat commands
 
