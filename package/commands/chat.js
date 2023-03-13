@@ -64,7 +64,9 @@ async function evalHandler(cmd, context, filename, cb) {
   load.start()
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
+  _pattern.writeUser(cmd)
   const res = await requestOpenai(cmd, commendType)
+  _pattern.writeAssistant(res)
   history.write(formatedCmd + "\n", "QUESTION")
 
   cb(null, res)
@@ -134,7 +136,7 @@ function startChatLog() {
 }
 
 function startPatternModeLog() {
-  log(`You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
+  log(`📔 You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
 }
 
 function startNormalModeLog() {

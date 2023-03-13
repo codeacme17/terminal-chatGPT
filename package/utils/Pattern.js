@@ -1,6 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const chalk = require("chalk")
+
 const { warn, log, error, success } = require("../utils/log")
 const { PATTERN_DIR } = require("../utils/path")
 const { COLORS } = require("./configs")
@@ -13,10 +14,63 @@ class Pattern {
       .readdirSync(PATTERN_DIR)
       .map((pattern) => pattern.replace(".json", ""))
 
+    this.PATTERN_FILE = ""
     this.PATTERN_NAME = ""
     this.PATTERN_CONTENT = ""
-    this.createFlag = false
     this.currentId = 0 // `id` is used to sort conversation records
+  }
+
+  read() {
+    this.PATTERN_FILE = path.resolve(PATTERN_DIR, `${this.PATTERN_NAME}.json`)
+    const RAW_CONTENT = fs.readFileSync(this.PATTERN_FILE, "utf-8")
+    if(!RAW_CONTENT) this.initPatternContent()
+    this.PATTERN_CONTENT = JSON.parse(fs.readFileSync(this.PATTERN_FILE, "utf-8"))
+    this.getCurrentId()
+  }
+
+  writeUser(data) {
+    this.read()
+    this.initPatternContent()
+
+    if (this.currentId === 0) {
+      this.PATTERN_CONTENT.user.push({
+        id: this.currentId,
+        system: data,
+      })
+    } else {
+      this.PATTERN_CONTENT.user.push({
+        id: this.currentId,
+        user: data,
+      })
+    }
+  }
+
+  writeAssistant(data) {
+    this.PATTERN_CONTENT.assistant.push({
+      id: this.currentId,
+      assistant: data,
+    })       
+
+    fs.writeFileSync(
+      this.PATTERN_FILE,
+      JSON.stringify(this.PATTERN_CONTENT, null, 2),
+      (err) => err && error(err)
+    )
+  }
+ 
+  getCurrentId() {
+    this.currentId = this.PATTERN_CONTENT.user.length ? 
+      this.PATTERN_CONTENT.user.length
+      : 0
+  }
+
+  // init content in pattern file, if there is no any content
+  initPatternContent() {
+    fs.writeFileSync(
+      this.PATTERN_FILE,
+      JSON.stringify({user:[], assistant:[]}),
+      (err) => err && error(err)
+    )
   }
 
   create(patternName) {
@@ -24,7 +78,7 @@ class Pattern {
 
     if (!this.checkHasPatternFile(patternName)) {
       fs.appendFile(PATTERN_FILE, "", (err) => err && error(err))
-      this.createFlag = true
+
       log()
       success(
         `Successed create pattern ${chalk.hex(COLORS.GREEN)(patternName)}`
@@ -35,53 +89,12 @@ class Pattern {
       )
   }
 
-  write(data) {
-
-    read(this.PATTERN_NAME)
-
-    if (this.currentId === 0) {
-      content.user.push({
-        id: this.currentId,
-        system: data.user,
-      })
-      content.assistant.push({
-        id: this.currentId,
-        assistant: data.assistant,
-      })   
-    } else {
-      content.user.push({
-        id: this.currentId,
-        user: data.user,
-      })
-      content.assistant.push({
-        id: this.currentId,
-        assistant: data.assistant,
-      })
-    }
-
-    fs.writeFileSync(
-      PATTERN_DIR,
-      JSON.stringify(content, null, 2),
-      (err) => err && error(err)
-    )
-    
-    this.currentId++
-  }
-
-  getCurrentId(patternName) {}
-
-  read(patternName) {
-    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
-    this.PATTERN_CONTENT = JSON.parse(fs.readFileSync(PATTERN_FILE, "utf-8"))
-    this.currentId = content.assistant[content.assistant.length - 1].id
-  }
-
   remove(patternName) {
-    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
-      
     if (!this.checkHasPatternFile(patternName)) {
       error(`there is no pattern ${chalk.hex(COLORS.YELLOW)(patternName)}`)
     }
+
+    const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
 
     fs.unlink(PATTERN_FILE, (err) => err && error(err))
     log()

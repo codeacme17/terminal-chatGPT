@@ -71,6 +71,7 @@ async function chosePatternQuestion(type) {
       )} to create one`
     )
     log()
+    process.exit(1)
     return
   }
   const answer = await _chosePattern(type)
