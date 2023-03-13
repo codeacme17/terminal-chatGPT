@@ -57,13 +57,15 @@ You need to configure your access rights to access the OpenAI API. Please replac
 
 ## Usage
 
-###  Chat
+### 🤖 Chat
 
 ```bash
 1gpt chat
 ```
 
 Use the above command to enter the chat mode to communicate with chatGPT.
+
+> This command will provide a quick chat mode, and your current chat conversation will not be remembered by chatGPT. If you want to continue chatting next time after leaving the terminal, I suggest you use pattern.
 
 #### chat commands
 
@@ -82,7 +84,7 @@ After entering the chat, you can perform different operations by entering the fo
 - some still under development...
 
 
-### Pattern
+### 📔 Pattern
 
 > Pattern is a module that can record your chat history with chatGPT, and you can continue the last chat when you open the terminal next time. You can create multiple patterns to correspond to different chatGPT systems, just like the sidebar on the chatGPT website
 
@@ -100,7 +102,7 @@ After entering the chat, you can perform different operations by entering the fo
 
 
 
-### History
+### 🕒 History
 
 ```bash
 1gpt history [options]
