@@ -23,8 +23,22 @@ program.usage("[command] [option]").description(generateCfonts().string)
 
 program
   .command("chat")
-  .description("Chat with GPT model")
+  .description("chat with GPT model")
   .action(require("../package/commands/chat"))
+
+program
+  .command("pattern")
+  .description(
+    "chose chat pattern, it will store different session records, seem like the sidebar in the ChatGPT web page"
+  )
+  .option(
+    "-u --use [PATTERN_NAME]",
+    "enter a certain pattern and continue to communicate with chatGPT"
+  )
+  .option("-l --list", "view the list of patterns you have stored")
+  .option("-c --create [PATTERN_NAME]", "create a pattern that you want to use")
+  .option("-r --remove [PATTERN_NAME]", "delete a pattern")
+  .action(require("../package/commands/pattern"))
 
 program
   .command("config")

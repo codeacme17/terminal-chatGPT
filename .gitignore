@@ -1,5 +1,9 @@
-node_modules/*
+node_modules
 
-KEY.JSON
+patterns
+
+KEY.json
 
 chat_history.txt
+
+sftp-config.json

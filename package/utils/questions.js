@@ -1,6 +1,8 @@
 const inquirer = require("inquirer")
 const chalk = require("chalk")
 const { COLORS } = require("./configs")
+const { warn } = require("../utils/log")
+const Pattern = require("./Pattern")
 
 const _confirmClearHistory = () =>
   inquirer.prompt([
@@ -22,7 +24,30 @@ const _confirmChangeKey = () =>
     },
   ])
 
+const _chosePattern = (pattern, type) => {
+  return inquirer.prompt([
+    {
+      name: "QUESTION",
+      type: "list",
+      message: `chose which pattern you want ${type}:`,
+      choices: pattern.patterns,
+    },
+  ])
+}
+
+const _createPattern = () =>
+  inquirer.prompt([
+    {
+      name: "QUESTION",
+      type: "input",
+      message: `what pattern you want create?`,
+      default: "pattern-temp",
+    },
+  ])
+
 module.exports = {
   _confirmClearHistory,
   _confirmChangeKey,
+  _chosePattern,
+  _createPattern,
 }

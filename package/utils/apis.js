@@ -15,6 +15,7 @@ async function Turbo(cache) {
         timeout: 30 * 1000,
       }
     )
+
     return response.data.choices[0].message.content.trim()
   } catch (err) {
     errorResponse(err)
@@ -96,11 +97,10 @@ function errorResponse(err) {
         break
 
       default:
+        error(err)
         break
     }
   else error(err)
-
-  process.exit(1)
 }
 
 function formatResponse(res) {

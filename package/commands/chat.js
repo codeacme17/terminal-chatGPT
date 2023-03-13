@@ -16,9 +16,13 @@ const history = new History()
 const cache = new Cache()
 const codeBoxer = new CodeBoxer()
 
+let _pattern
+let PATTERN_MODE = false
+
 /** Starts a REPL interface to chat with GPT-3 using OpenAI's API.
  */
-module.exports = () => {
+module.exports = (pattern) => {
+  // check does have API_KEY
   if (!fs.existsSync(API_FILE)) {
     error("You haven't set OPENAI KEY. Please set up before dive into chatting")
     log(
@@ -30,6 +34,12 @@ module.exports = () => {
     return
   }
 
+  // trigger to pattern mode
+  if(pattern.PATTERN_NAME) {
+    _pattern = pattern
+    PATTERN_MODE = true
+  }
+
   history.init()
   startChatLog()
   startREPL()
@@ -37,6 +47,8 @@ module.exports = () => {
 
 function startREPL() {
   process.env.NODE_REPL_HISTORY = ""
+
+  PATTERN_MODE && cache.injectPattern(_pattern)
 
   repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
@@ -52,9 +64,13 @@ async function evalHandler(cmd, context, filename, cb) {
   if (!formatedCmd || load.loading) return
 
   load.start()
+
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
+
   const res = await requestOpenai(cmd, commendType)
+
+  PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
 
   cb(null, res)
@@ -62,9 +78,12 @@ async function evalHandler(cmd, context, filename, cb) {
 
 function writerHandler(output) {
   cache.answer(output)
+  PATTERN_MODE && _pattern.writeAssistant(output)
   history.write(output + "\n\n", "ANSWER")
+
   const boxedOutput = codeBoxer.boxify(output.toString())
   load.end()
+
   return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
 }
 
@@ -112,7 +131,7 @@ function startChatLog() {
   clear()
 
   log()
-  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
+  PATTERN_MODE ? startPatternModeLog() : startNormalModeLog()
   log()
 
   log(
@@ -121,4 +140,14 @@ function startChatLog() {
       new Date().toLocaleTimeString()
     )}\n`
   )
+}
+
+function startPatternModeLog() {
+  log(`📔 You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
+  if(_pattern.currentId === 0) _pattern.firstLog() 
+  else _pattern.lastHistoryLog()
+}
+
+function startNormalModeLog() {
+  log(`${chalk.hex(COLORS.PURPLE)("🤖 CHAT WITH GPT MODEL HERE...")}`)
 }
