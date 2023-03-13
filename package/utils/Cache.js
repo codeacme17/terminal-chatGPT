@@ -29,6 +29,29 @@ class Cache {
     }
     this.cache.push(msg)
   }
+
+  // if is pattern mode, inject previous pattern content to current cache
+  injectPattern(pattern) {
+    pattern.read()
+    const patternContent = pattern.PATTERN_CONTENT
+    const userList = patternContent.user
+    const assistantList = patternContent.assistant
+
+    let p = 0
+
+    while(p < userList.length) {
+      if(p === 0) {
+        this.firstChat(userList[p].system)
+        this.answer(assistantList[p].assistant)
+        p++
+        continue
+      }
+
+      this.ask(userList[p].user)
+      this.answer(assistantList[p].assistant)
+      p++
+    }
+  }
 }
 
 module.exports = Cache

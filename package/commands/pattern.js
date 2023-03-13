@@ -74,6 +74,6 @@ async function chosePatternQuestion(type) {
     process.exit(1)
     return
   }
-  const answer = await _chosePattern(type)
+  const answer = await _chosePattern(pattern, type)
   return answer.QUESTION
 }

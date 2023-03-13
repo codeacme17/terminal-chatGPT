@@ -47,6 +47,8 @@ module.exports = (pattern) => {
 
 function startREPL() {
   process.env.NODE_REPL_HISTORY = ""
+  
+  PATTERN_MODE && cache.injectPattern(_pattern)
 
   repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
@@ -62,11 +64,13 @@ async function evalHandler(cmd, context, filename, cb) {
   if (!formatedCmd || load.loading) return
 
   load.start()
+
+
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
-  _pattern.writeUser(cmd)
+
   const res = await requestOpenai(cmd, commendType)
-  _pattern.writeAssistant(res)
+  PATTERN_MODE && _pattern.writeUser(cmd)
   history.write(formatedCmd + "\n", "QUESTION")
 
   cb(null, res)
@@ -74,9 +78,12 @@ async function evalHandler(cmd, context, filename, cb) {
 
 function writerHandler(output) {
   cache.answer(output)
+  PATTERN_MODE && _pattern.writeAssistant(output)
   history.write(output + "\n\n", "ANSWER")
+
   const boxedOutput = codeBoxer.boxify(output.toString())
   load.end()
+
   return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
 }
 

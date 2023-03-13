@@ -24,14 +24,13 @@ const _confirmChangeKey = () =>
     },
   ])
 
-const _chosePattern = (type) => {
-  const pattern = new Pattern()
+const _chosePattern = (pattern, type) => {
   return inquirer.prompt([
     {
       name: "QUESTION",
       type: "list",
       message: `chose which pattern you want ${type}:`,
-      choices: pattern.patterns, // dummy
+      choices: pattern.patterns,
     },
   ])
 }
