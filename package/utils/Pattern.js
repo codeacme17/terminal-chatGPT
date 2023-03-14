@@ -23,8 +23,6 @@ class Pattern {
 
   read() {
     this.PATTERN_FILE = path.resolve(PATTERN_DIR, `${this.PATTERN_NAME}.json`)
-    const RAW_CONTENT = fs.readFileSync(this.PATTERN_FILE, "utf-8")
-    if (!RAW_CONTENT) this.initPatternContent()
     this.PATTERN_CONTENT = JSON.parse(
       fs.readFileSync(this.PATTERN_FILE, "utf-8")
     )
@@ -66,20 +64,12 @@ class Pattern {
       : 0
   }
 
-  // init content in pattern file, if there is no any content
-  initPatternContent() {
-    fs.writeFileSync(
-      this.PATTERN_FILE,
-      JSON.stringify({ user: [], assistant: [] }),
-      (err) => err && error(err)
-    )
-  }
-
   create(patternName) {
     const PATTERN_FILE = path.resolve(PATTERN_DIR, `${patternName}.json`)
 
     if (!this.checkHasPatternFile(patternName)) {
       fs.appendFile(PATTERN_FILE, "", (err) => err && error(err))
+      this.initPatternContent(PATTERN_FILE)
 
       log()
       success(
@@ -89,6 +79,15 @@ class Pattern {
       error(
         `the pattern ${chalk.hex(COLORS.YELLOW)(patternName)} already exists`
       )
+  }
+
+  // init content in pattern file, if there is no any content
+  initPatternContent(PATTERN_FILE) {
+    fs.writeFileSync(
+      PATTERN_FILE,
+      JSON.stringify({ user: [], assistant: [] }),
+      (err) => err && error(err)
+    )
   }
 
   remove(patternName) {
