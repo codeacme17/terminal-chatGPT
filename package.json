@@ -21,7 +21,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "eslint . --ext .js"
   },
   "dependencies": {
     "boxen": "^5.1.2",
