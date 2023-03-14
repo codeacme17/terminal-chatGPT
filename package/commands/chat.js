@@ -94,12 +94,6 @@ function formatCmd(cmd) {
 
 function chatCommand(cmd) {
   switch (true) {
-    case /^\/davinci_code/.test(cmd):
-      return "DaviciCode"
-
-    case /^\/davinci_chat/.test(cmd):
-      return "DaviciChat"
-
     case cmd === "/":
       process.exit(1)
       break
@@ -115,16 +109,7 @@ function chatCommand(cmd) {
 }
 
 async function requestOpenai(cmd, type) {
-  switch (type) {
-    case "DaviciChat":
-      return await DavinciChat(cmd)
-
-    case "DaviciCode":
-      return await DavinciCode(cmd.substring(5))
-
-    default:
-      return await Turbo(cache.cache)
-  }
+  return await Turbo(cache.cache)
 }
 
 function startChatLog() {
