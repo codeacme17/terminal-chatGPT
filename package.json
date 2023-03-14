@@ -19,6 +19,10 @@
   "homepage": "https://github.com/codeacme17/1llg-terminal-GPT#readme",
   "author": "leyoonafr",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint ."
+  },
   "dependencies": {
     "boxen": "^5.1.2",
     "cfonts": "^3.1.1",
@@ -30,6 +34,7 @@
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "eslint": "^8.35.0"
+    "eslint": "^8.35.0",
+    "husky": "^8.0.0"
   }
 }
