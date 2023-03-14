@@ -75,12 +75,6 @@ After entering the chat, you can perform different operations by entering the fo
 
 - `/clear`:  to exit current chatting process and clean terminal screen
 
-  > The following commands will not modify the Endpoint (Turbo) of the default conversation process, just a single dialogue
-
-- `/davinci-chat + prompt`: use text-davinci-003 model to send this prompt
-
-- `/davinci-code + code`: use code-davinci-002 model to expalin your code
-
 - some still under development...
 
 
