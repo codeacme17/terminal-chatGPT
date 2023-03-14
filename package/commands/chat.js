@@ -8,7 +8,7 @@ const Cache = require("../utils/Cache")
 const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
-const { Turbo, DavinciChat, DavinciCode } = require("../utils/apis")
+const { Turbo } = require("../utils/apis")
 const { API_FILE } = require("../utils/path")
 
 const load = new Load(`chatGPT is writing...`)
@@ -108,7 +108,7 @@ function chatCommand(cmd) {
   }
 }
 
-async function requestOpenai(cmd, type) {
+async function requestOpenai() {
   return await Turbo(cache.cache)
 }
 
