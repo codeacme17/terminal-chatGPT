@@ -1,9 +1,10 @@
 const chalk = require("chalk")
 const Pattern = require("../utils/Pattern")
 const chat = require("./chat")
+
 const { COLORS } = require("../utils/configs")
 const { _chosePattern, _createPattern } = require("../utils/questions")
-const { success, log, warn } = require("../utils/log")
+const { log, warn } = require("../utils/log")
 
 module.exports = ({ use, create, list, remove }) => {
   switch (true) {

@@ -38,8 +38,8 @@ class Cache {
 
     let p = 0
 
-    while(p < userList.length) {
-      if(p === 0) {
+    while (p < userList.length) {
+      if (p === 0) {
         this.firstChat(userList[p].system)
         this.answer(assistantList[p].assistant)
         p++

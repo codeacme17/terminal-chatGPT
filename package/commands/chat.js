@@ -35,7 +35,7 @@ module.exports = (pattern) => {
   }
 
   // trigger to pattern mode
-  if(pattern.PATTERN_NAME) {
+  if (pattern.PATTERN_NAME) {
     _pattern = pattern
     PATTERN_MODE = true
   }
@@ -143,8 +143,12 @@ function startChatLog() {
 }
 
 function startPatternModeLog() {
-  log(`📔 You are now chatting with ${chalk.hex(COLORS.PURPLE)(_pattern.PATTERN_NAME)} pattern`)
-  if(_pattern.currentId === 0) _pattern.firstLog() 
+  log(
+    `📔 You are now chatting with ${chalk.hex(COLORS.PURPLE)(
+      _pattern.PATTERN_NAME
+    )} pattern`
+  )
+  if (_pattern.currentId === 0) _pattern.firstLog()
   else _pattern.lastHistoryLog()
 }
 

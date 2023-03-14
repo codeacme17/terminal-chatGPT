@@ -1,8 +1,6 @@
 const inquirer = require("inquirer")
 const chalk = require("chalk")
 const { COLORS } = require("./configs")
-const { warn } = require("../utils/log")
-const Pattern = require("./Pattern")
 
 const _confirmClearHistory = () =>
   inquirer.prompt([
