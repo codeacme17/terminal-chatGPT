@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai")
-const { log, error } = require("../utils/log")
+const { error } = require("../utils/log")
 
 // 3.5 turbo model api
 async function Turbo(cache) {
