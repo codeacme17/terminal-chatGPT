@@ -12,7 +12,7 @@ async function Turbo(cache) {
         messages: cache,
       },
       {
-        timeout: 30 * 1000,
+        timeout: 60 * 1000,
       }
     )
 
@@ -21,7 +21,6 @@ async function Turbo(cache) {
     errorResponse(err)
   }
 }
-
 
 module.exports = {
   Turbo
@@ -38,7 +37,6 @@ function errorResponse(err) {
   if (err.response)
     switch (err.response.status) {
       case 401:
-        log()
         error("your OpenAI key is incorrect, please change correct one")
         break
 
