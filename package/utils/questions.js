@@ -16,9 +16,7 @@ const _confirmChangeKey = () =>
     {
       name: "QUESTION",
       type: "confirm",
-      message: `There was a key in your ${chalk.hex(COLORS.YELLOW)(
-        "KEY.json"
-      )} file, do you confirm to change this key ?`,
+      message: `Now there is a key you configured before, do you confirm to change this key ?`,
     },
   ])
 

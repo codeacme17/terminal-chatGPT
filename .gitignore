@@ -2,7 +2,7 @@ node_modules
 
 patterns
 
-KEY.json
+user_configs.json
 
 chat_history.txt
 

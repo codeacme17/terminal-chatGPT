@@ -1,38 +1,38 @@
 const fs = require("fs")
 const shell = require("shelljs")
 
-const { API_FILE } = require("../utils/path")
+const { CONFIG_FILE } = require("../utils/path")
 const { log, success, warn } = require("../utils/log")
 const { _confirmChangeKey } = require("../utils/questions")
 
 module.exports = ({ key }) => {
   if (typeof key === "string") handleKey(key)
-  else warn("OpenAI key cannot be empty")
+  else warn("OpenAI key cannot be empt y")
 }
 
 async function handleKey(key) {
-  if (!fs.existsSync(API_FILE)) await createKeyFile()
+  if (!fs.existsSync(CONFIG_FILE)) await createKeyFile()
   if (checkHasKey() && !(await confirmChangeKey())) return
   modifyKey(key)
 }
 
 async function modifyKey(key) {
-  const data = JSON.parse(fs.readFileSync(API_FILE))
+  const data = JSON.parse(fs.readFileSync(CONFIG_FILE))
   data["OPENAI_API"] = `${key}`
-  fs.writeFileSync(API_FILE, JSON.stringify(data))
+  fs.writeFileSync(CONFIG_FILE, JSON.stringify(data))
 
   log()
   success("Successfully modified OpenAI key")
 }
 
 async function createKeyFile() {
-  shell.touch(API_FILE)
+  shell.touch(CONFIG_FILE)
 
   const KEY = {
     OPENAI_API: "",
   }
 
-  fs.appendFileSync(API_FILE, JSON.stringify(KEY), (err) => {
+  fs.appendFileSync(CONFIG_FILE, JSON.stringify(KEY), (err) => {
     console.log(err)
   })
 
@@ -40,7 +40,7 @@ async function createKeyFile() {
 }
 
 function checkHasKey() {
-  const data = JSON.parse(fs.readFileSync(API_FILE))
+  const data = JSON.parse(fs.readFileSync(CONFIG_FILE))
   return !!data["OPENAI_API"]
 }
 

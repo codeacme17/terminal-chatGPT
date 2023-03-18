@@ -9,7 +9,7 @@ const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
 const { Turbo } = require("../utils/apis")
-const { API_FILE } = require("../utils/path")
+const { CONFIG_FILE } = require("../utils/path")
 
 const load = new Load(`chatGPT is writing...`)
 const history = new History()
@@ -23,7 +23,7 @@ let PATTERN_MODE = false
  */
 module.exports = (pattern) => {
   // check does have API_KEY
-  if (!fs.existsSync(API_FILE)) {
+  if (!fs.existsSync(CONFIG_FILE)) {
     error("You haven't set OPENAI KEY. Please set up before dive into chatting")
     log(
       `use command ${chalk.hex(COLORS.YELLOW)(

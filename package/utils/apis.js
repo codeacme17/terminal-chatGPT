@@ -23,12 +23,12 @@ async function Turbo(cache) {
 }
 
 module.exports = {
-  Turbo
+  Turbo,
 }
 
 function initConfiguration() {
   const configuration = new Configuration({
-    apiKey: require("../../KEY.json").OPENAI_API,
+    apiKey: require("../../user_configs.json").OPENAI_API,
   })
   return new OpenAIApi(configuration)
 }
@@ -46,4 +46,3 @@ function errorResponse(err) {
     }
   else error(err)
 }
-
