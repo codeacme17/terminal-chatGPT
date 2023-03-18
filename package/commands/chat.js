@@ -8,10 +8,10 @@ const Cache = require("../utils/Cache")
 const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
-const { Turbo } = require("../utils/apis")
+const { TurboStream } = require("../utils/apis.js")
 const { CONFIG_FILE } = require("../utils/path")
 
-const load = new Load(`chatGPT is writing...`)
+const load = new Load(`chatGPT is thinking...`)
 const history = new History()
 const cache = new Cache()
 const codeBoxer = new CodeBoxer()
@@ -59,7 +59,7 @@ function startREPL() {
 
 async function evalHandler(cmd, context, filename, cb) {
   const formatedCmd = formatCmd(cmd)
-  const commendType = chatCommand(formatedCmd)
+  chatCommandHandler(formatedCmd)
 
   if (!formatedCmd || load.loading) return
 
@@ -68,7 +68,8 @@ async function evalHandler(cmd, context, filename, cb) {
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
 
-  const res = await requestOpenai(cmd, commendType)
+  console.log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}`)
+  const res = await TurboStream(cache.cache, load)
 
   PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
@@ -82,9 +83,7 @@ function writerHandler(output) {
   history.write(output + "\n\n", "ANSWER")
 
   const boxedOutput = codeBoxer.boxify(output.toString())
-  load.end()
-
-  return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
+  return `${boxedOutput}\n`
 }
 
 function formatCmd(cmd) {
@@ -92,25 +91,22 @@ function formatCmd(cmd) {
   return cmd.substring(0, index)
 }
 
-function chatCommand(cmd) {
+function chatCommandHandler(cmd) {
   switch (true) {
     case cmd === "/":
-      process.exit(1)
+      process.exit()
       break
 
     case cmd === "/clear":
       clear()
-      process.exit(1)
+      process.exit()
       break
-
-    default:
-      return "Turbo"
   }
 }
 
-async function requestOpenai() {
-  return await Turbo(cache.cache)
-}
+// async function requestOpenai() {
+//   return await Turbo(cache.cache)
+// }
 
 function startChatLog() {
   clear()
