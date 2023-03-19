@@ -45,12 +45,14 @@ module.exports = (pattern) => {
   startREPL()
 }
 
+let replInstance
+
 function startREPL() {
   process.env.NODE_REPL_HISTORY = ""
 
   PATTERN_MODE && cache.injectPattern(_pattern)
 
-  repl.start({
+  replInstance = repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
     eval: evalHandler,
     writer: writerHandler,
@@ -68,8 +70,8 @@ async function evalHandler(cmd, context, filename, cb) {
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
 
-  console.log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}`)
-  const res = await TurboStream(cache.cache, load)
+  log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}`)
+  const res = await TurboStream(cache.cache, load, replInstance)
 
   PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
@@ -83,12 +85,8 @@ function writerHandler(output) {
   history.write(output + "\n\n", "ANSWER")
 
   const boxedOutput = codeBoxer.boxify(output.toString())
+  return `\n`
   return `${boxedOutput}\n`
-}
-
-function formatCmd(cmd) {
-  const index = cmd.lastIndexOf("\n")
-  return cmd.substring(0, index)
 }
 
 function chatCommandHandler(cmd) {
@@ -104,9 +102,10 @@ function chatCommandHandler(cmd) {
   }
 }
 
-// async function requestOpenai() {
-//   return await Turbo(cache.cache)
-// }
+function formatCmd(cmd) {
+  const index = cmd.lastIndexOf("\n")
+  return cmd.substring(0, index)
+}
 
 function startChatLog() {
   clear()
