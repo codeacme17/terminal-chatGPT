@@ -1,16 +1,12 @@
 <br />
-<br />
-<br />
 
-<p align="center">
+<p>
   <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true "/> 
 </p>
 
 <br />
-<br />
-<br />
 
-<p align="center">
+<p>
   <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json">
     <img height="20" alt="node" src="https://img.shields.io/badge/node-%3E%3D%2014.0.0-orange?style=flat-square"/>
   </a>
@@ -22,15 +18,15 @@
   </a>
 </p>
 
-<p align="center">
-1llg-terminal-GPT is a command-line interface (CLI) tool that uses OpenAI's GPT-3.5-turbo(default) API to generate text based on user prompts.
-</p>
+
+> 1llg-terminal-GPT is a command-line interface (CLI) tool that uses OpenAI's GPT-3.5-turbo(default) API to generate text based on user prompts.
 
 ## Use Case
 
-<p align="center">
-  <img alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/Screenshot-usage.png"/> 
-</p>
+
+https://user-images.githubusercontent.com/67408722/226816002-298b5065-72a0-4dcd-bee9-4cc95b3cb162.mov
+
+
 
 ## Start
 
