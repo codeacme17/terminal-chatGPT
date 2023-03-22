@@ -11,9 +11,6 @@
 <br />
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/1llg-terminal-gpt">
-    <img height="20" alt="download" src="https://img.shields.io/npm/dw/1llg-terminal-gpt?style=flat-square"/>
-  </a>
   <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json">
     <img height="20" alt="node" src="https://img.shields.io/badge/node-%3E%3D%2014.0.0-orange?style=flat-square"/>
   </a>
