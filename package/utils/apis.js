@@ -1,6 +1,6 @@
-const readline = require("readline")
 const { Configuration, OpenAIApi } = require("openai")
-const { error } = require("../utils/log")
+const { error } = require("./log")
+const streamDataHander = require("./stream-data-handler")
 
 // 3.5 turbo model api
 async function Turbo(cache) {
@@ -24,14 +24,12 @@ async function Turbo(cache) {
 }
 
 // 3.5 turbo model stream-completion api
-const TurboStream = async (cache, load, replInstance) => {
+const TurboStream = async (cache, load) => {
   const { OpenAIClient } = await import("@fern-api/openai")
 
   const client = new OpenAIClient({
     token: require("../../user_configs.json").OPENAI_API,
   })
-
-  const stream = process.stdout
 
   return new Promise((resolve) => {
     let res = ""
@@ -43,20 +41,19 @@ const TurboStream = async (cache, load, replInstance) => {
         messages: cache,
         stream: true,
       },
-      (data) => {
+      async (data) => {
         counter++
-        if (counter == 1) load.end()
+        if (counter == 1) {
+          load.end()
+        }
         let content = data.choices[0].delta.content || ""
-        if (content === "\n\n") content = ""
-
+        if (counter == 2 && content.includes("\n\n")) content = ""
         res += content
-        stream.write(content)
+        await streamDataHander(content)
       },
       {
         onError: (err) => error(err),
         onFinish: () => {
-          // readline.cursorTo(stream, 0, startLine)
-          // stream.clearScreenDown()
           resolve(res)
         },
       }
@@ -64,7 +61,6 @@ const TurboStream = async (cache, load, replInstance) => {
   })
 }
 
-// can you give me a twoSum function in 30 tokens?
 module.exports = {
   Turbo,
   TurboStream,

@@ -5,7 +5,6 @@ const fs = require("fs")
 const Load = require("../utils/Load")
 const History = require("../utils/History")
 const Cache = require("../utils/Cache")
-const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
 const { TurboStream } = require("../utils/apis.js")
@@ -14,7 +13,6 @@ const { CONFIG_FILE } = require("../utils/path")
 const load = new Load(`chatGPT is thinking...`)
 const history = new History()
 const cache = new Cache()
-const codeBoxer = new CodeBoxer()
 
 let _pattern
 let PATTERN_MODE = false
@@ -45,14 +43,12 @@ module.exports = (pattern) => {
   startREPL()
 }
 
-let replInstance
-
 function startREPL() {
   process.env.NODE_REPL_HISTORY = ""
 
   PATTERN_MODE && cache.injectPattern(_pattern)
 
-  replInstance = repl.start({
+  repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
     eval: evalHandler,
     writer: writerHandler,
@@ -71,7 +67,7 @@ async function evalHandler(cmd, context, filename, cb) {
   else cache.ask(cmd)
 
   log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}`)
-  const res = await TurboStream(cache.cache, load, replInstance)
+  const res = await TurboStream(cache.cache, load)
 
   PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
@@ -84,9 +80,7 @@ function writerHandler(output) {
   PATTERN_MODE && _pattern.writeAssistant(output)
   history.write(output + "\n\n", "ANSWER")
 
-  const boxedOutput = codeBoxer.boxify(output.toString())
   return `\n`
-  return `${boxedOutput}\n`
 }
 
 function chatCommandHandler(cmd) {

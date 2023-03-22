@@ -38,12 +38,12 @@ class CodeBoxer {
 
   boxify(text) {
     return text.replaceAll(this.codeRegex, (match, language, code) => {
-      const highlighted = this.highlighty(code, language)
+      const highlighted = this.#highlighty(code, language)
       return boxen(highlighted, this.boxenOptions)
     })
   }
 
-  highlighty(code, language) {
+  #highlighty(code, language) {
     return highlight(code, {
       language: language ? language : "javascript",
       ignoreIllegals: true,
