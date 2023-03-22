@@ -1,5 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai")
-const { error } = require("../utils/log")
+const { error } = require("./log")
+const streamDataHander = require("./stream-data-handler")
 
 // 3.5 turbo model api
 async function Turbo(cache) {
@@ -22,14 +23,54 @@ async function Turbo(cache) {
   }
 }
 
+// 3.5 turbo model stream-completion api
+const TurboStream = async (cache, load) => {
+  const { OpenAIClient } = await import("@fern-api/openai")
+
+  const client = new OpenAIClient({
+    token: require("../../user_configs.json").OPENAI_API,
+  })
+
+  return new Promise((resolve) => {
+    let res = ""
+    let counter = 0
+
+    client.chat.createCompletion(
+      {
+        model: "gpt-3.5-turbo",
+        messages: cache,
+        stream: true,
+      },
+      async (data) => {
+        counter++
+        if (counter == 1) {
+          load.end()
+        }
+        let content = data.choices[0].delta.content || ""
+        if (counter == 2 && content.includes("\n\n")) content = ""
+        res += content
+        await streamDataHander(content)
+      },
+      {
+        onError: (err) => error(err),
+        onFinish: () => {
+          resolve(res)
+        },
+      }
+    )
+  })
+}
+
 module.exports = {
-  Turbo
+  Turbo,
+  TurboStream,
 }
 
 function initConfiguration() {
   const configuration = new Configuration({
-    apiKey: require("../../KEY.json").OPENAI_API,
+    apiKey: require("../../user_configs.json").OPENAI_API,
   })
+
   return new OpenAIApi(configuration)
 }
 
@@ -46,4 +87,3 @@ function errorResponse(err) {
     }
   else error(err)
 }
-

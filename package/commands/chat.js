@@ -5,16 +5,14 @@ const fs = require("fs")
 const Load = require("../utils/Load")
 const History = require("../utils/History")
 const Cache = require("../utils/Cache")
-const CodeBoxer = require("../utils/CodeBoxer")
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
-const { Turbo } = require("../utils/apis")
-const { API_FILE } = require("../utils/path")
+const { TurboStream } = require("../utils/apis.js")
+const { CONFIG_FILE } = require("../utils/path")
 
-const load = new Load(`chatGPT is writing...`)
+const load = new Load(`chatGPT is thinking...`)
 const history = new History()
 const cache = new Cache()
-const codeBoxer = new CodeBoxer()
 
 let _pattern
 let PATTERN_MODE = false
@@ -23,7 +21,7 @@ let PATTERN_MODE = false
  */
 module.exports = (pattern) => {
   // check does have API_KEY
-  if (!fs.existsSync(API_FILE)) {
+  if (!fs.existsSync(CONFIG_FILE)) {
     error("You haven't set OPENAI KEY. Please set up before dive into chatting")
     log(
       `use command ${chalk.hex(COLORS.YELLOW)(
@@ -59,7 +57,7 @@ function startREPL() {
 
 async function evalHandler(cmd, context, filename, cb) {
   const formatedCmd = formatCmd(cmd)
-  const commendType = chatCommand(formatedCmd)
+  chatCommandHandler(formatedCmd)
 
   if (!formatedCmd || load.loading) return
 
@@ -68,7 +66,8 @@ async function evalHandler(cmd, context, filename, cb) {
   if (!cache.cache.length) cache.firstChat(cmd)
   else cache.ask(cmd)
 
-  const res = await requestOpenai(cmd, commendType)
+  log(`${chalk.hex(COLORS.YELLOW)("Answer: ")}`)
+  const res = await TurboStream(cache.cache, load)
 
   PATTERN_MODE && _pattern.writeUser(formatedCmd)
   history.write(formatedCmd + "\n", "QUESTION")
@@ -81,35 +80,25 @@ function writerHandler(output) {
   PATTERN_MODE && _pattern.writeAssistant(output)
   history.write(output + "\n\n", "ANSWER")
 
-  const boxedOutput = codeBoxer.boxify(output.toString())
-  load.end()
+  return `\n`
+}
 
-  return `${chalk.hex(COLORS.YELLOW)("Answer: ")}\n${boxedOutput}\n`
+function chatCommandHandler(cmd) {
+  switch (true) {
+    case cmd === "/":
+      process.exit()
+      break
+
+    case cmd === "/clear":
+      clear()
+      process.exit()
+      break
+  }
 }
 
 function formatCmd(cmd) {
   const index = cmd.lastIndexOf("\n")
   return cmd.substring(0, index)
-}
-
-function chatCommand(cmd) {
-  switch (true) {
-    case cmd === "/":
-      process.exit(1)
-      break
-
-    case cmd === "/clear":
-      clear()
-      process.exit(1)
-      break
-
-    default:
-      return "Turbo"
-  }
-}
-
-async function requestOpenai() {
-  return await Turbo(cache.cache)
 }
 
 function startChatLog() {
