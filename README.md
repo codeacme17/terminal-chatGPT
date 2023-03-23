@@ -1,10 +1,13 @@
 <br />
+<br />
 
 <p>
   <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true "/> 
 </p>
 
 <br />
+<br />
+
 
 <p>
   <a href="https://github.com/codeacme17/1llg-terminal-GPT/blob/main/package.json">
@@ -23,9 +26,9 @@
 
 ## Use Case
 
-
-https://user-images.githubusercontent.com/67408722/226816002-298b5065-72a0-4dcd-bee9-4cc95b3cb162.mov
-
+<p>
+  <img width="520" src = "https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/usecase.gif"></img>
+</p>
 
 
 ## Start
