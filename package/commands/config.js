@@ -1,13 +1,30 @@
 const fs = require("fs")
 const shell = require("shelljs")
-
+const chalk = require("chalk")
 const { CONFIG_FILE } = require("../utils/path")
 const { log, success, warn } = require("../utils/log")
 const { _confirmChangeKey } = require("../utils/questions")
+const { COLORS } = require("../utils/configs")
 
-module.exports = ({ key }) => {
-  if (typeof key === "string") handleKey(key)
-  else warn("OpenAI key cannot be empt y")
+module.exports = (argv) => {
+  if (Object.keys(argv).length > 1) {
+    warn(
+      `Can not enter multiple options to ${chalk.hex(COLORS.GREEN)(
+        "config"
+      )} command`
+    )
+    return
+  }
+
+  if (Object.keys(argv).length < 1) {
+    warn(
+      `You must enter an option to ${chalk.hex(COLORS.GREEN)("config")} command`
+    )
+    return
+  }
+
+  if (typeof key === "string") handleKey(argv.key)
+  else warn("OpenAI key cannot be empty")
 }
 
 async function handleKey(key) {

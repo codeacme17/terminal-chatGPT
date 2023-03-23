@@ -6,22 +6,31 @@ const { COLORS } = require("../utils/configs")
 const { _chosePattern, _createPattern } = require("../utils/questions")
 const { log, warn } = require("../utils/log")
 
-module.exports = ({ use, create, list, remove }) => {
+module.exports = (argv) => {
+  if (Object.keys(argv).length > 1) {
+    warn(
+      `Can not enter multiple options to ${chalk.hex(COLORS.GREEN)(
+        "pattern"
+      )} command`
+    )
+    return
+  }
+
   switch (true) {
-    case !!create:
-      handleCreate(create)
+    case !!argv.create:
+      handleCreate(argv.create)
       break
 
-    case !!list:
+    case !!argv.list:
       handleList()
       break
 
-    case !!remove:
-      handleRemove(remove)
+    case !!argv.remove:
+      handleRemove(argv.remove)
       break
 
     default:
-      handleUse(use)
+      handleUse(argv.use)
       break
   }
 }

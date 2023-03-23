@@ -48,8 +48,8 @@ program
 
 program
   .command("history")
-  .option("-r --read", "read history file conent in terminal", false)
-  .option("-c --clear", "clear history file conent", false)
+  .option("-r --read", "read history file conent in terminal")
+  .option("-c --clear", "clear history file conent")
   .description("Operate your chat historical document")
   .action(require("../package/commands/history"))
 
