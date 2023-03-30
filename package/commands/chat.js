@@ -5,10 +5,15 @@ const fs = require("fs")
 const Load = require("../utils/Load")
 const History = require("../utils/History")
 const Cache = require("../utils/Cache")
+
 const { COLORS } = require("../utils/configs")
 const { clear, error, log } = require("../utils/log")
 const { TurboStream } = require("../utils/apis.js")
 const { CONFIG_FILE } = require("../utils/path")
+const {
+  chatCommandHandler,
+  preventDefaultCommands,
+} = require("../utils/chat-command-handler")
 
 const load = new Load(`chatGPT is thinking...`)
 const history = new History()
@@ -48,11 +53,15 @@ function startREPL() {
 
   PATTERN_MODE && cache.injectPattern(_pattern)
 
-  repl.start({
+  const REPLServer = repl.start({
     prompt: `${chalk.hex(COLORS.GREEN)("Question: ")}\n`,
     eval: evalHandler,
     writer: writerHandler,
+    replMode: repl.REPL_MODE_STRICT,
+    ignoreUndefined: true,
   })
+
+  preventDefaultCommands(REPLServer)
 }
 
 async function evalHandler(cmd, context, filename, cb) {
@@ -81,19 +90,6 @@ function writerHandler(output) {
   history.write(output + "\n\n", "ANSWER")
 
   return `\n`
-}
-
-function chatCommandHandler(cmd) {
-  switch (true) {
-    case cmd === "/":
-      process.exit()
-      break
-
-    case cmd === "/clear":
-      clear()
-      process.exit()
-      break
-  }
 }
 
 function formatCmd(cmd) {
