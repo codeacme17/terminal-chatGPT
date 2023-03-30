@@ -1,9 +1,11 @@
 <br />
+<br />
 
 <p align="center">
-  <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo-3.png?raw=true"/> 
+  <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/terminal-gpt/logo.png?raw=true"/> 
 </p>
 
+<br />
 <br />
 
 <p align="center">
@@ -108,9 +110,6 @@ History will record every conversation you have with chatGPT.
 
 
 >You can view or manage the history file by yourself, which is located in the chat-history.txt file in the root directory of the project
-
-
-
 
 
 
