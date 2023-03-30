@@ -23,7 +23,7 @@ module.exports = (argv) => {
     return
   }
 
-  if (typeof key === "string") handleKey(argv.key)
+  if (typeof argv.key === "string") handleKey(argv.key)
   else warn("OpenAI key cannot be empty")
 }
 
