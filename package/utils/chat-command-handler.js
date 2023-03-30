@@ -1,6 +1,7 @@
 const chalk = require("chalk")
+
 const { COLORS } = require("./configs")
-const { log } = require("./log")
+const { log, clear } = require("./log")
 
 function chatCommandHandler(cmd) {
   switch (true) {
