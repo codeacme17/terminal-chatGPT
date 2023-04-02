@@ -14,7 +14,10 @@ async function streamDataHander(content) {
   if (isCodeBlock && content.includes("``")) shadowEnd = true
 
   // code block END
-  if (shadowEnd && content.includes("`\n")) {
+  if (
+    (shadowEnd && content.includes("`\n")) ||
+    (isCodeBlock && content.includes("```"))
+  ) {
     content = "\n"
     await deleteLines(codeRows)
     stream.write(codeBoxer.boxify(codeContent.toString() + "`"))
@@ -56,3 +59,6 @@ function deleteLines(end) {
 }
 
 module.exports = streamDataHander
+
+// can you give me a sum func in py?
+// can you give me a debounce fn in js?
