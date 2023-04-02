@@ -105,6 +105,7 @@ async function errorResponse(errStatus) {
     case 500:
       log("There are some issues on Openai servers")
       log()
+      break
 
     default:
       log(
