@@ -58,7 +58,7 @@ function deleteLines(end) {
   return Promise.resolve()
 }
 
-module.exports = streamDataHander
-
-// can you give me a sum func in py?
-// can you give me a debounce fn in js?
+module.exports = {
+  streamDataHander,
+  deleteLines,
+}

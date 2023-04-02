@@ -1,6 +1,8 @@
+const chalk = require("chalk")
 const { Configuration, OpenAIApi } = require("openai")
-const { error } = require("./log")
-const streamDataHander = require("./stream-data-handler")
+const { streamDataHander, deleteLines } = require("./stream-data-handler")
+const { COLORS } = require("./configs")
+const { log } = require("console")
 
 // 3.5 turbo model api
 async function Turbo(cache) {
@@ -52,10 +54,8 @@ const TurboStream = async (cache, load) => {
         await streamDataHander(content)
       },
       {
-        onError: (err) => error(err),
-        onFinish: () => {
-          resolve(res)
-        },
+        onError: (error) => errorResponse(error.response.status),
+        onFinish: () => resolve(res),
       }
     )
   })
@@ -74,16 +74,45 @@ function initConfiguration() {
   return new OpenAIApi(configuration)
 }
 
-function errorResponse(err) {
-  if (err.response)
-    switch (err.response.status) {
-      case 401:
-        error("your OpenAI key is incorrect, please change correct one")
-        break
+async function errorResponse(errStatus) {
+  await deleteLines(0)
 
-      default:
-        error(err)
-        break
-    }
-  else error(err)
+  log(`${chalk.hex(COLORS.PURPLE)("System:")}`)
+
+  switch (errStatus) {
+    case 401:
+      log(
+        "There are problems with your certification, they may be caused by the following reasons"
+      )
+      log(" - Invalid Authentication")
+      log(" - The requesting API key is not correct")
+      log(" - Your account is not part of an organization")
+      log()
+      break
+
+    case 429:
+      log(
+        "There were some problems processing your request, they may be caused by the following reasons"
+      )
+      log(" - You are sending requests too quickly")
+      log(
+        " - You exceeded your current quota, please check your plan and billing details"
+      )
+      log("The engine is currently overloaded, please try again later")
+      log()
+      break
+
+    case 500:
+      log("There are some issues on Openai servers")
+      log()
+
+    default:
+      log(
+        "There are some problems I can't track down, please check the network conditions and try later"
+      )
+      log()
+      break
+  }
+
+  process.exit(1)
 }
