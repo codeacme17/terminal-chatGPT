@@ -75,7 +75,7 @@ function initConfiguration() {
 }
 
 async function errorResponse(errStatus) {
-  await deleteLines(0)
+  deleteLines(1)
 
   log(`${chalk.hex(COLORS.PURPLE)("System:")}`)
 

@@ -2,7 +2,7 @@ const chalk = require("chalk")
 const { COLORS } = require("./configs")
 
 /** The Load Class to create a loading effect interface
-    @param {string} message the message of loading text content 
+    @param {string} message the message of loading text content
  */
 class Load {
   constructor(message) {

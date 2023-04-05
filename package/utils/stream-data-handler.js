@@ -19,7 +19,7 @@ async function streamDataHander(content) {
     (isCodeBlock && content.includes("```"))
   ) {
     content = "\n"
-    await deleteLines(codeRows)
+    deleteLines(codeRows + 1)
     stream.write(codeBoxer.boxify(codeContent.toString() + "`"))
     shadowEnd = false
     isCodeBlock = false
@@ -40,22 +40,17 @@ async function streamDataHander(content) {
   stream.write(content)
 }
 
-function deleteLines(end) {
-  const rows = end + 1
-  const clear = "\x1b[2K\x1b[0G"
-
-  readline.moveCursor(stream, 0, -rows)
-
-  for (let i = 0; i < rows; i++) {
-    readline.clearLine(stream, 0)
-    readline.moveCursor(stream, 0, 1)
-  }
+function deleteLines(rows) {
+  const CLEAR_LINE = "\x1b[2K\x1b[0G"
+  const SHOW_CURSOR = "\x1b[?25h"
 
   readline.moveCursor(stream, 0, -rows)
   readline.clearLine(stream, 0)
-  stream.write(clear)
+
+  stream.write(CLEAR_LINE)
+  stream.write(SHOW_CURSOR)
+
   readline.moveCursor(stream, 0, 0)
-  return Promise.resolve()
 }
 
 module.exports = {
